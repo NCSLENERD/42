@@ -1,47 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
+/*   ft_putstr_non_printable.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmayela <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 19:26:16 by nmayela           #+#    #+#             */
-/*   Updated: 2025/07/10 19:15:10 by nmayela          ###   ########.fr       */
+/*   Created: 2025/07/09 14:27:20 by nmayela           #+#    #+#             */
+/*   Updated: 2025/07/10 19:15:33 by nmayela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
+//verifier si on met unsigned char ou juste char
+void	ft_convert(char *str)
+{
+	char	*base;
 
-int	ft_str_is_alpha(char *str)
+	base = "0123456789abcdef";
+	write(1, "\\", 1);
+	write(1, &base[*str / 16], 1);
+	*str = base[*str % 16];
+}
+
+void	ft_putstr_non_printable(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (!('A' <= str[i] && str[i] <= 'Z'))
+		if (str[i] < 32 || str[i] > 126)
 		{
-			if (!('a' <= str[i] && str[i] <= 'z'))
-				return (0);
+			ft_convert(&str[i]);
 		}
-		else if (!('a' <= str[i] || str[i] <= 'z'))
-		{
-			if (!('A' <= str[i] && str[i] <= 'Z'))
-				return (0);
-		}
+		write(1, &str[i], 1);
 		i++;
 	}
-	return (1);
 }
 /*int main(void)
 {
-	char *test = "test";
-	char *test1 = "lolLLLKKKsKja";
-	char *test2 = "aa!ddd!dd";
-
-	printf("%d",ft_str_is_alpha(test));
-	printf("%d",ft_str_is_alpha(test1));
-	printf("%d",ft_str_is_alpha(test2));
-
-	return 0;	
+	char text[]= "Hello\nHow are you?";
+	char tab[1];
+	tab[0] = -1;
+	ft_putstr_non_printable(text);
 }*/
