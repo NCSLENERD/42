@@ -1,0 +1,7 @@
+*.txt
+a.out
+*.swp
+.vscode
+*.a
+*.o
+libftTester
