@@ -62,9 +62,9 @@ int	ft_printf(const char *format, ...)
 /*int main(void)
 {
 	char* prenom = NULL;
-	//char *ptr = "Nicolas";
-	ft_printf("%p",prenom);
-	printf("\n");
+	//char *prenom = "Nicolas";
+	ft_printf("%s",prenom);
+	//printf("\n");
 	//printf("%s",prenom);
-	printf("\n");
+	//printf("\n");
 }*/
