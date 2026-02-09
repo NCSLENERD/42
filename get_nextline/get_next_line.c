@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-int	verif_line(char *buffer)
+int	verif_line(char *buffer) // vérifie si on a trouver un \n
 {
 	int	i;
 
@@ -30,7 +30,10 @@ char	*get_line(char *buffer)
 	int	i;
 	char *stock;
 
-	stock = malloc(sizeof(char) * BUFFER_SIZE);
+	i = 0;
+	while (buffer[i] != '\n' && buffer[i])//Calcul de la taille de la ligne
+			i++;
+	stock = malloc((sizeof(char) * i) + 1);
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i])
 		{
@@ -41,32 +44,96 @@ char	*get_line(char *buffer)
 		return(stock);
 }
 
+char *clear(char *str)
+{
+	char	*res;
+	size_t	len;
+	int		i;
+	int		j;
+
+	len = ft_strlen(str);
+	i = 0;
+	while (str[i] != '\n' && str[i])//Calcul de la taille de la ligne
+			i++;
+	i++;
+	res = malloc(sizeof(char) * (len - i));
+	j = 0;
+	while(str[i])
+	{
+		res[j] = str[i];
+		j++;
+		i++;
+	}
+	return(res);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*buffer;
 	static char	*stock;
-	//char		*line;
-	int			i;
+	char		*line;
+	char		*tmp;
+	int			r;
 
-	buffer = malloc (sizeof(char) * BUFFER_SIZE);
-	stock = malloc(sizeof(char) * BUFFER_SIZE);// faire fonction auxiliaire ou utiliser strjoin car ca free le stock 
-	read(fd, buffer, BUFFER_SIZE);
 
-	i = 0;
-	//remplacer par un strjoin ?
-	while (buffer[i])
+	while (1)
+    {
+		buffer = malloc (sizeof(char) * BUFFER_SIZE + 1);
+		r = read(fd, buffer, BUFFER_SIZE);
+		if (r == 0)
 		{
-			stock[i] = buffer[i];
-			i++;
+    		free(buffer);
+    		break;
 		}
-	free(buffer);
-	if(verif_line(stock) == 1)
+		if(r == -1){
+			free(buffer);
+			return (NULL);
+		}
+		buffer[r] = '\0'; // demander a riwan si \0 necessaire
+        tmp = ft_strjoin(stock, buffer);
+        free(stock);
+		free(buffer);
+        stock = tmp;
+
+        
+        if (verif_line(stock) == 1)
+            break;
+    }
+
+	if (!stock || *stock == '\0')
+    	return (NULL);
+
+	/*buffer = malloc (sizeof(char) * BUFFER_SIZE);
+	r = read(fd, buffer, BUFFER_SIZE);
+	if(r == 0 && !stock)
+		return(NULL);*/
+	if(r == 0 && stock)
 	{
-		return(get_line(stock));
-		/*line = get_line(stock);
-		return(line);*/
+		line = ft_strjoin(NULL,stock);
+		free(stock);
+		stock = NULL;
+		return(line);
 	}
-	return(stock);
+
+	if(stock && r < BUFFER_SIZE)
+	{
+		line = ft_strjoin(NULL,stock);
+		free(stock);
+		stock = NULL;
+		return(line);
+	}
+
+	line = get_line(stock);
+	stock = clear(stock);
+	return (line);
+	/*stock = ft_strjoin(stock,buffer);*/
+	//free(buffer);
+	/*if(verif_line(stock) == 1)
+	{ 
+		line = get_line(stock);
+		stock = clear(stock);
+		return (line);
+	}*/
 }
 
 int main()
