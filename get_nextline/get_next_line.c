@@ -11,40 +11,30 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-int	verif_line(char *buffer) // vérifie si on a trouver un \n
+char	*get_linev(char *buffer)
 {
-	int	i;
+	int		i;
+	char	*stock;
 
-	i = 0;
-	while (buffer[i])
-	{
-		if (buffer[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*get_line(char *buffer)
-{
-	int	i;
-	char *stock;
-
-	i = 0;
-	while (buffer[i] != '\n' && buffer[i])//Calcul de la taille de la ligne
-			i++;
-	stock = malloc((sizeof(char) * i) + 1);
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i])
-		{
-			stock[i] = buffer[i];
-			i++;
-		}
-		stock[i] = '\n';
-		return(stock);
+		i++;
+	stock = malloc((sizeof(char) * i) + 2);
+	if (!stock)
+		return (NULL);
+	i = 0;
+	while (buffer[i] != '\n' && buffer[i])
+	{
+		stock[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] == '\n')
+		stock[i++] = '\n';
+	stock[i] = '\0';
+	return (stock);
 }
 
-char *clear(char *str)
+char	*clear(char *str)
 {
 	char	*res;
 	size_t	len;
@@ -53,96 +43,91 @@ char *clear(char *str)
 
 	len = ft_strlen(str);
 	i = 0;
-	while (str[i] != '\n' && str[i])//Calcul de la taille de la ligne
-			i++;
-	i++;
-	res = malloc(sizeof(char) * (len - i));
-	j = 0;
-	while(str[i])
-	{
-		res[j] = str[i];
-		j++;
+	while (str[i] != '\n' && str[i])
 		i++;
+	i++;
+	res = malloc(sizeof(char) * (len - i) + 1);
+	if (!res)
+		return (NULL);
+	j = 0;
+	while (str[i])
+		res[j++] = str[i++];
+	res[j] = '\0';
+	free(str);
+	return (res);
+}
+
+char	*line_in_stock(char **stock, int r)
+{
+	char	*line;
+
+	if (!*stock || **stock == '\0')
+		return (NULL);
+	if (r == 0 && *stock)
+	{
+		line = ft_strjoin(NULL, *stock);
+		free(*stock);
+		*stock = NULL;
+		return (line);
 	}
-	return(res);
+	line = get_linev(*stock);
+
+	*stock = clear(*stock);
+	return (line);
+}
+
+char	*concat_stock_and_buffer(char *stock, char *buffer, int r)
+{
+	char	*tmp;
+
+	buffer[r] = '\0';
+	tmp = ft_strjoin(stock, buffer);
+	free(stock);
+	free(buffer);
+	return (tmp);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*buffer;
 	static char	*stock;
-	char		*line;
-	char		*tmp;
 	int			r;
 
-
 	while (1)
-    {
+	{
 		buffer = malloc (sizeof(char) * BUFFER_SIZE + 1);
+		if (!buffer)
+			return (NULL);
 		r = read(fd, buffer, BUFFER_SIZE);
 		if (r == 0)
 		{
-    		free(buffer);
-    		break;
+			free (buffer);
+			break ;
 		}
-		if(r == -1){
-			free(buffer);
+		if (r == -1)
+		{
+			free (buffer);
 			return (NULL);
 		}
-		buffer[r] = '\0'; // demander a riwan si \0 necessaire
-        tmp = ft_strjoin(stock, buffer);
-        free(stock);
-		free(buffer);
-        stock = tmp;
-
-        
-        if (verif_line(stock) == 1)
-            break;
-    }
-
-	if (!stock || *stock == '\0')
-    	return (NULL);
-
-	/*buffer = malloc (sizeof(char) * BUFFER_SIZE);
-	r = read(fd, buffer, BUFFER_SIZE);
-	if(r == 0 && !stock)
-		return(NULL);*/
-	if(r == 0 && stock)
-	{
-		line = ft_strjoin(NULL,stock);
-		free(stock);
-		stock = NULL;
-		return(line);
+		stock = concat_stock_and_buffer(stock, buffer, r);
+		if (verif_line(stock) == 1)
+			break ;
 	}
-
-	if(stock && r < BUFFER_SIZE)
-	{
-		line = ft_strjoin(NULL,stock);
-		free(stock);
-		stock = NULL;
-		return(line);
-	}
-
-	line = get_line(stock);
-	stock = clear(stock);
-	return (line);
-	/*stock = ft_strjoin(stock,buffer);*/
-	//free(buffer);
-	/*if(verif_line(stock) == 1)
-	{ 
-		line = get_line(stock);
-		stock = clear(stock);
-		return (line);
-	}*/
+	return (line_in_stock(&stock, r));
 }
-
-int main()
+/*int main()
 {
     char* name = "test.txt";
-
     int fd = open(name, O_RDWR);
-    printf("%s",get_next_line(fd));
-    printf("%s",get_next_line(fd));
-    printf("%s",get_next_line(fd));
-}
-// Faire un premier read 
+    
+    char *line;
+
+    line = get_next_line(fd);  // récupère la première ligne
+    if (line)
+    {
+        printf("%s", line);    // affiche
+        free(line);            // libère la mémoire
+    }
+	close(fd);
+	return 0;
+}*/
