@@ -61,9 +61,9 @@ char	*line_in_stock(char **stock, int r)
 {
 	char	*line;
 
-	if (!*stock || **stock == '\0')
+	if (!*stock || ft_strlen(*stock) == 0)
 		return (NULL);
-	if (r == 0 && *stock)
+	if (r == 0 && *stock && !verif_line(*stock))
 	{
 		line = ft_strjoin(NULL, *stock);
 		free(*stock);
@@ -71,7 +71,6 @@ char	*line_in_stock(char **stock, int r)
 		return (line);
 	}
 	line = get_linev(*stock);
-
 	*stock = clear(*stock);
 	return (line);
 }
@@ -91,6 +90,7 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	static char	*stock;
+	char		*line;
 	int			r;
 
 	while (1)
@@ -99,35 +99,42 @@ char	*get_next_line(int fd)
 		if (!buffer)
 			return (NULL);
 		r = read(fd, buffer, BUFFER_SIZE);
+		if(r == 0)
+			free (buffer);
 		if (r == 0)
-		{
-			free (buffer);
 			break ;
-		}
 		if (r == -1)
-		{
-			free (buffer);
-			return (NULL);
-		}
+			return (free (buffer), stock = free_stock(stock), NULL);
 		stock = concat_stock_and_buffer(stock, buffer, r);
 		if (verif_line(stock) == 1)
 			break ;
 	}
-	return (line_in_stock(&stock, r));
+	line = line_in_stock(&stock, r);
+	if (!line)
+		stock = free_stock(stock);
+	return (line);
 }
 /*int main()
 {
-    char* name = "test.txt";
-    int fd = open(name, O_RDWR);
-    
+	char *name = "read_error.txt";
+    int fd = open(name, O_RDONLY);
+    //if (fd == -1)
+		//return (fprintf(stderr, "non"), 1);
     char *line;
+	int count = 0;
 
     line = get_next_line(fd);  // récupère la première ligne
-    if (line)
-    {
-        printf("%s", line);    // affiche
-        free(line);            // libère la mémoire
+    while(line)
+	{
+		printf("ok\n");
+        printf("%s", line);
+		free(line);
+		line = get_next_line(fd); 
+		count++;
+		 // affiche       // libère la mémoire
     }
+	free(line);
 	close(fd);
+	printf("%d lines \n", count);
 	return 0;
 }*/

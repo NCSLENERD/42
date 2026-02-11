@@ -12,6 +12,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+char	*free_stock(char *stock)
+{
+	free(stock);
+	return (NULL);
+}
+
 int	verif_line(char *buffer)
 {
 	int	i;
@@ -38,7 +44,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-static char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s)
 {
 	int		i;
 	char	*res;
