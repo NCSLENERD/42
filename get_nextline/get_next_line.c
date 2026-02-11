@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 		if (!buffer)
 			return (NULL);
 		r = read(fd, buffer, BUFFER_SIZE);
-		if(r == 0)
+		if (r == 0)
 			free (buffer);
 		if (r == 0)
 			break ;
@@ -116,10 +116,10 @@ char	*get_next_line(int fd)
 }
 /*int main()
 {
-	char *name = "read_error.txt";
+	char *name = "/dev/stdin";
     int fd = open(name, O_RDONLY);
-    //if (fd == -1)
-		//return (fprintf(stderr, "non"), 1);
+    if (fd == -1)
+		return (fprintf(stderr, "non"), 1);
     char *line;
 	int count = 0;
 
