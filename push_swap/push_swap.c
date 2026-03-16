@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 typedef  struct stck  {
 	int data;
@@ -35,7 +36,7 @@ void printlist(stck *head)
 	stck *curr = head;
 	while(curr)
 	{
-		printf("%d\n",curr->data);
+		printf("%d\n",curr->data);// mettre ft_printf
 		curr = curr->next;
 	}
 }
@@ -148,16 +149,55 @@ void remove_at(stck** head, unsigned int index)
 	free(curr);
 }
 
+void sa(stck** head,int flg)
+{
+	int tmp;
+	if(*head != NULL && (*head)->next != NULL)
+	{
+		tmp = (*head)->data;
+		(*head)->data = (*head)->next->data;
+		(*head)->next->data = tmp;
+		if(flg == 0)
+			write(1,"sa\n",3);
+	}
+}
+
+void sb(stck** head,int flg)
+{
+	int tmp;
+	if(*head != NULL && (*head)->next != NULL)
+	{
+		tmp = (*head)->data;
+		(*head)->data = (*head)->next->data;
+		(*head)->next->data = tmp;
+		if(flg == 0)
+			write(1,"sb\n",3);
+	}
+}
+
+void ss(stck** head_a, stck** head_b)
+{
+	sa(head_a,1);
+	sb(head_b,1);
+	write(1,"ss\n",3);
+}
+
 int main()
 {
 	stck *mylist;
-	
-	mylist = createNode(10);
-	pushfront(&mylist, 15);
-	pushback(&mylist,14);
+	stck *mylist2;
+
+	mylist = createNode(1);
+	pushback(&mylist, 2);
+	pushback(&mylist,3);
 	//popback(&mylist);
-	remove_at(&mylist,2);
+	mylist2 = createNode(4);
+	pushback(&mylist2, 5);
+	pushback(&mylist2,6);
+	ss(&mylist,&mylist2);
 	printlist(mylist);
-	//printf("%d",nb1);
-	//test
+	//sb(&mylist);
+	printf("liste 2\n");
+	printlist(mylist2);
+	//printlist(mylist2);
 }
