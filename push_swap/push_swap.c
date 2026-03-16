@@ -182,6 +182,13 @@ void ss(stck** head_a, stck** head_b)
 	write(1,"ss\n",3);
 }
 
+void pa(stck** head_a, stck **head_b)
+{
+	pushfront(head_a,(*head_b)->data);
+	popfront(head_b);
+	write(1,"pa\n",3);
+}
+
 int main()
 {
 	stck *mylist;
@@ -194,7 +201,7 @@ int main()
 	mylist2 = createNode(4);
 	pushback(&mylist2, 5);
 	pushback(&mylist2,6);
-	ss(&mylist,&mylist2);
+	pa(&mylist,&mylist2);
 	printlist(mylist);
 	//sb(&mylist);
 	printf("liste 2\n");
