@@ -4,10 +4,10 @@
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmayela <nmayela@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:36:00 by nmayela           #+#    #+#             */
 /*   Updated: 2026/03/13 17:36:01 by nmayela          ###   ########.fr       */
 /*                                                                            */
+/*                                                +#+#+#+#+#+   +#+           */
 /* ************************************************************************** */
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,6 +54,11 @@ void pushfront(stck **head, int nb)
 
 void pushback(stck **head, int nb)
 {
+	if (*head == NULL)
+	{
+		*head = createNode(nb);
+		return ;
+	}
     stck *newnode = createNode(nb);
 	stck *curr = *head;
 	while(curr->next)
@@ -189,22 +194,47 @@ void pa(stck** head_a, stck **head_b)
 	write(1,"pa\n",3);
 }
 
+void pb(stck** head_a, stck **head_b)
+{
+	pushfront(head_b,(*head_a)->data);
+	popfront(head_a);
+	write(1,"pb\n",3);
+}
+
+void ra(stck** head)
+{
+	stck *tmp = NULL;
+	stck *curr = *head;
+	while((*head)->next)
+	{
+		while(curr->next)
+			curr = curr->next;
+		pushback(&tmp,curr->data);
+		popback(head);
+		(*head) = (*head)->next;
+		curr = *head;
+	}
+	write(1,"ra\n",3);
+}
+
 int main()
 {
-	stck *mylist;
-	stck *mylist2;
+	stck *mylist = NULL;
+	stck *mylist2 = NULL;
 
-	mylist = createNode(1);
+	//mylist = createNode(1);
 	pushback(&mylist, 2);
 	pushback(&mylist,3);
+	ra(&mylist);
+	printlist(mylist);
 	//popback(&mylist);
-	mylist2 = createNode(4);
+	/*mylist2 = createNode(4);
 	pushback(&mylist2, 5);
 	pushback(&mylist2,6);
-	pa(&mylist,&mylist2);
+	pb(&mylist,&mylist2);
 	printlist(mylist);
 	//sb(&mylist);
 	printf("liste 2\n");
 	printlist(mylist2);
-	//printlist(mylist2);
+	//printlist(mylist2);$*/
 }
