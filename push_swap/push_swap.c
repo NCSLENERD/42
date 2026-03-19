@@ -31,12 +31,23 @@ stck *createNode(int nb)
 	return newnode;
 }
 
+
+void free_list(stck* head) {
+    stck* tmp;
+
+    while (head != NULL) {
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+}
+
 void printlist(stck *head)
 {
 	stck *curr = head;
 	while(curr)
 	{
-		printf("%d\n",curr->data);// mettre ft_printf
+		write(1,"%d\n",2);// mettre ft_printf
 		curr = curr->next;
 	}
 }
@@ -92,9 +103,10 @@ void popback(stck **head)
 		tmp = curr->prev;
 		tmp->next = NULL;
 	}     
-    else                         
+    else
+	{                       
         *head = NULL;
-  
+	}
 	free(curr);
 }
 
@@ -205,28 +217,35 @@ void ra(stck** head)
 {
 	stck *tmp = NULL;
 	stck *curr = *head;
-	while((*head)->next)
+	while((*head))
 	{
 		while(curr->next)
 			curr = curr->next;
 		pushback(&tmp,curr->data);
 		popback(head);
-		(*head) = (*head)->next;
 		curr = *head;
 	}
+	curr = tmp;
+	while (tmp)
+	{
+		pushback(head,tmp->data);
+		tmp = tmp->next;
+	}
+	free_list(curr);
 	write(1,"ra\n",3);
 }
 
 int main()
 {
 	stck *mylist = NULL;
-	stck *mylist2 = NULL;
+	//stck *mylist2 = NULL;
 
 	//mylist = createNode(1);
 	pushback(&mylist, 2);
 	pushback(&mylist,3);
 	ra(&mylist);
 	printlist(mylist);
+	free_list(mylist);
 	//popback(&mylist);
 	/*mylist2 = createNode(4);
 	pushback(&mylist2, 5);
