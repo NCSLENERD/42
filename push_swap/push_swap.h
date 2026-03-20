@@ -20,13 +20,25 @@ typedef  struct stck  {
 	struct stck *next;
 } stck;
 
-
+int	ft_atoi(const char *nptr);
+void printlist(stck *head);
 void free_list(stck* head);
 stck *createNode(int nb);
-void remove_at(stck** head, unsigned int index);//pas sur
-void insert_at(stck** head, int nb, unsigned int index);//pas sur
+void	ft_putnbr_fd(int n, int fd);
 void popback(stck **head);
 void popfront(stck **head);
 void pushback(stck **head, int nb);
 void pushfront(stck **head, int nb);
+void sa(stck** head,int flg);
+void sb(stck** head,int flg);
+void ss(stck** head_a, stck** head_b);
+void pa(stck** head_a, stck **head_b);
+void pb(stck** head_a, stck **head_b);
+void ra(stck** head,int flg);
+void rb(stck** head,int flg);
+void rr(stck** head_a, stck** head_b);
+void rra(stck** head,int flg);
+void rrb(stck** head,int flg);
+void rrr(stck** head_a , stck** head_b);
+
 #endif
