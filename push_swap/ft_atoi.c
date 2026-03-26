@@ -9,14 +9,13 @@
 /*   Updated: 2025/11/26 19:10:25 by nmayela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-#include <stdlib.h>
+#include "push_swap.h"
 
 int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	result;
-	int	sign;
+	int		i;
+	long	result;
+	int		sign;
 
 	sign = 1;
 	i = 0;
@@ -33,6 +32,11 @@ int	ft_atoi(const char *nptr)
 	{
 		result = result * 10;
 		result = result + (nptr[i] - '0');
+		if (result * sign > 2147483647 || result * sign < -2147483648)
+		{
+			write(2,"Error\n",6);
+			exit(1);
+		}
 		i++;
 	}
 	return (result * sign);

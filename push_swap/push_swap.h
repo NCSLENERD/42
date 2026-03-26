@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -20,6 +21,7 @@ typedef  struct stck  {
 	struct stck *next;
 } stck;
 
+int	lstack(stck *head);
 int	ft_atoi(const char *nptr);
 void printlist(stck *head);
 void free_list(stck* head);

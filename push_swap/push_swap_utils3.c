@@ -37,3 +37,18 @@ void rrr(stck** head_a , stck** head_b)
 	rrb(head_b,1);
 	write(1,"rrb\n",4);
 }
+
+int	lstack(stck *head)
+{
+	int	i;
+	stck *curr;
+	i = 0;
+	curr = head;
+	while(curr)
+	{
+		i++;
+		curr = curr->next;
+	}
+	return (i);
+}
+
