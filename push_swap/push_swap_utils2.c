@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void ra(stck** head,int flg)
+void rra(stck** head,int flg)
 {
 	stck *curr = *head;
 
@@ -22,10 +22,10 @@ void ra(stck** head,int flg)
 	pushfront(head,curr->data);
 	popback(head);
 	if(flg == 0)
-			write(1,"ra\n",3);
+			write(1,"rra\n",4);
 }
 
-void rb(stck** head,int flg)
+void rrb(stck** head,int flg)
 {
 	stck *curr = *head;
 
@@ -36,12 +36,51 @@ void rb(stck** head,int flg)
 	pushfront(head,curr->data);
 	popback(head);
 	if(flg == 0)
-			write(1,"rb\n",3);
+			write(1,"rrb\n",4);
 }
 
-void rr(stck** head_a, stck** head_b)
+void rrr(stck** head_a, stck** head_b)
 {
 	ra(head_a,1);
 	rb(head_b,1);
-	write(1,"rr\n",3);
+	write(1,"rrr\n",4);
+}
+
+int	isdigit_tab(char **tab)
+{
+	int i;
+	int j;
+
+	i = 1;
+	while (tab[i])
+	{
+		j = 0;
+		if (tab[i][0] == '-' || tab[i][0] == '+')
+			j = 1;
+		while (tab[i][j])
+		{
+			if (tab[i][j] < '0' || tab[i][j] > '9')
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	is_sorted(stck *head)
+{
+	stck *curr;
+	
+	if(head == NULL)
+		return(1);
+	curr = head;
+	while(curr->next)
+	{
+		if(curr->data > curr->next->data)
+			return(0);
+		curr = curr->next;
+	}
+	
+	return (1);
 }

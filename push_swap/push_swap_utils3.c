@@ -11,31 +11,31 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void rra(stck** head,int flg)
+void ra(stck** head,int flg)
 {
 	if((*head) == NULL || (*head)->next == NULL)
 		return;
 	pushback(head,(*head)->data);
 	popfront(head);
 	if(flg == 0)
-			write(1,"rra\n",4);
+			write(1,"ra\n",4);
 }
 
-void rrb(stck** head,int flg)
+void rb(stck** head,int flg)
 {
 	if((*head) == NULL || (*head)->next == NULL)
 		return;
 	pushback(head,(*head)->data);
 	popfront(head);
 	if(flg == 0)
-			write(1,"rrb\n",4);
+			write(1,"rb\n",4);
 }
 
-void rrr(stck** head_a , stck** head_b)
+void rr(stck** head_a , stck** head_b)
 {
 	rra(head_a,1);
 	rrb(head_b,1);
-	write(1,"rrb\n",4);
+	write(1,"rr\n",4);
 }
 
 int	lstack(stck *head)
@@ -50,5 +50,27 @@ int	lstack(stck *head)
 		curr = curr->next;
 	}
 	return (i);
+}
+
+int	verifdoublon(stck *head)
+{
+	stck *curr1;
+	stck *curr2;
+	
+	if(head == NULL)
+		return(1);
+	curr1 = head;
+	while(curr1->next)
+	{
+		curr2 = curr1->next;
+		while(curr2)
+		{
+			if(curr1->data == curr2->data)
+				return (0);
+			curr2 = curr2->next;
+		}
+		curr1 = curr1->next;
+	}
+	return (1);
 }
 

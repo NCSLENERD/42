@@ -11,71 +11,84 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 #include <stdio.h>
-//faire verif push_swap , si doublon / pas int / trop grand int 
 //trouver algo de tri
 
-int	verifdoublon(stck *head)
+void	sort2(stck **head)
 {
-	stck *curr1;
-	stck *curr2;
-	
-	if(head == NULL)
-		return(1);
-	curr1 = head;
-	while(curr1->next)
-	{
-		curr2 = curr1->next;
-		while(curr2)
-		{
-			if(curr1->data == curr2->data)
-				return (0);
-			curr2 = curr2->next;
-		}
-		curr1 = curr1->next;
-	}
-	return (1);
+	if ((*head)->data > (*head)->next->data)
+		sa(head, 0);
 }
 
-int	isdigit_tab(char **tab)
+void sort3(stck **head)
 {
-	int i;
-	int j;
+	int	a;
+	int	b;
+	int	c;
 
-	i = 1;
-	while (tab[i])
+	a = (*head)->data;
+	b = (*head)->next->data;
+	c = (*head)->next->next->data;
+
+	if(a < b &&  c < b && a < c)// 1 3 2
 	{
-		j = 0;
-		if (tab[i][0] == '-' || tab[i][0] == '+')
-			j = 1;
-		while (tab[i][j])
-		{
-			if (tab[i][j] < '0' || tab[i][j] > '9')
-				return (0);
-			j++;
-		}
-		i++;
+		rra(head,0);
+		sa(head,0);
 	}
-	return (1);
+	else if(a > b && c < a && c < b)// 3 2 1
+	{
+		ra(head,0);
+		sa(head,0);
+	}
+	else if(a < b && b > c && c < a)// 2 3 1
+		rra(head,0);
+	else if(a > b && c > b && a < c)// 2 1 3
+		sa(head,0);
+	else if(a > b && a > c && b < c)//3 1 2
+		ra(head,0);
 }
 
-int main(int argc, char *argv[])
-{ 
-	int i;
-	stck *a;
-	stck *b;
-
-	if(!isdigit_tab(argv))
+int	verif_err(int argcv2, char *argvv2[], stck **head)
+{
+	int	i;
+	if(!isdigit_tab(argvv2))
 	{
 		write(2,"Error\n",6);
 		exit(1);
 	}
-	a = NULL;
-	b= NULL;
 	i = 1;
-	while(i < argc)
+	while(i < argcv2)
 	{
-		pushback(&a,ft_atoi(argv[i]));
+		pushback(head,ft_atoi(argvv2[i]));
 		i++;
 	}
+	if(!verifdoublon(*head))
+	{
+		write(2,"Error\n",6);
+		exit(1);
+	}
+	return (1);
+}
+
+void	push_swap(stck **a, stck **b, int argcv2)
+{
+	(void) b;
+	if(argcv2 == 4)
+		sort3(a);
+	else if(argcv2 == 3)
+		sort2(a);
+}
+
+int main(int argc, char *argv[])
+{ 
+	stck *a;
+	stck *b;
+
+	a = NULL;
+	b= NULL;
+	if(verif_err(argc,argv,&a) &&  !is_sorted(a))
+		push_swap(&a,&b,argc);
 	printlist(a);
+	free_list(a);
+	free_list(b);
+	return (0);
 }

@@ -21,6 +21,9 @@ typedef  struct stck  {
 	struct stck *next;
 } stck;
 
+int	is_sorted(stck *head);
+int	isdigit_tab(char **tab);
+int	verifdoublon(stck *head);
 int	lstack(stck *head);
 int	ft_atoi(const char *nptr);
 void printlist(stck *head);
