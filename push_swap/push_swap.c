@@ -47,6 +47,75 @@ void sort3(stck **head)
 		ra(head,0);
 }
 
+int best_pos(stck *head, int data)
+{
+	stck *curr;
+	int	i;
+	int	best_pos;
+	int	val;
+
+	best_pos = lstack(head);
+	i = 1;
+	val = 2147483647;
+	curr = head;
+	while(curr)
+	{
+		if (curr->data > data && curr->data < val)
+		{
+			val = curr->data;
+			best_pos = i;
+		}
+		i++;
+		curr = curr->next;
+	}
+	return(best_pos);
+}
+
+int	find_pos(stck *head, int data)
+{
+	stck *curr;
+	int	pos;
+
+	pos = 1;
+	curr = head;
+	while(curr)
+	{
+		if (curr->data == data)
+			return(pos);
+		pos++;
+		curr = curr->next;
+	}
+	return (pos);
+}
+
+int cost_b(stck *b, int data)
+{
+	int len;
+	int	pos;
+	int	cost;
+
+	cost = 0;
+	pos = find_pos(b,data);
+	len = lstack(b);
+	if(pos > (len/2))
+		cost = len - pos;
+	else
+		cost = pos;
+	return (cost);
+}
+
+int calc_cost(int pos ,int len)
+{
+	int cost;
+
+	cost = 0;
+	if(pos > (len/2))
+		cost = len - pos;
+	else
+		cost = pos;
+	return (cost);
+}
+
 int	verif_err(int argcv2, char *argvv2[], stck **head)
 {
 	int	i;
@@ -87,6 +156,7 @@ int main(int argc, char *argv[])
 	b= NULL;
 	if(verif_err(argc,argv,&a) &&  !is_sorted(a))
 		push_swap(&a,&b,argc);
+	printf("cost :%d\n",calc_cost(best_pos(a,2),lstack(a)));
 	printlist(a);
 	free_list(a);
 	free_list(b);
