@@ -21,6 +21,9 @@ typedef  struct stck  {
 	struct stck *next;
 } stck;
 
+int total_cost(int ca, int cb);
+int ft_abs(int n);
+int	ft_max(int a, int b);
 int	is_sorted(stck *head);
 int	isdigit_tab(char **tab);
 int	verifdoublon(stck *head);

@@ -55,7 +55,7 @@ int best_pos(stck *head, int data)
 	int	val;
 
 	best_pos = lstack(head);
-	i = 1;
+	i = 0;
 	val = 2147483647;
 	curr = head;
 	while(curr)
@@ -71,12 +71,12 @@ int best_pos(stck *head, int data)
 	return(best_pos);
 }
 
-int	find_pos(stck *head, int data)
+int	find_pos(stck *head, int data)	
 {
 	stck *curr;
 	int	pos;
 
-	pos = 1;
+	pos = 0;
 	curr = head;
 	while(curr)
 	{
@@ -88,46 +88,162 @@ int	find_pos(stck *head, int data)
 	return (pos);
 }
 
-int cost_b(stck *b, int data)
-{
-	int len;
-	int	pos;
-	int	cost;
-
-	cost = 0;
-	pos = find_pos(b,data);
-	len = lstack(b);
-	if(pos > (len/2))
-		cost = len - pos;
-	else
-		cost = pos;
-	return (cost);
-}
-
 int calc_cost(int pos ,int len)
 {
-	int cost;
-
-	cost = 0;
-	if(pos > (len/2))
-		cost = len - pos;
-	else
-		cost = pos;
-	return (cost);
+	if(pos <= (len/2))
+		return(pos);
+	return (-(len - pos));
 }
 
-int	verif_err(int argcv2, char *argvv2[], stck **head)
+int total_cost(int ca, int cb)
+{
+	if (ca >= 0 && cb >= 0 )
+		return (ft_max(ca, cb)); //rr
+	else if (ca <= 0 && cb <= 0)
+		return (ft_max(-ca, -cb));//rrr
+	else
+		return (ft_abs(ca) + ft_abs(cb));//sens opposé
+}
+
+int	best_move(stck *head_a , stck *head_b)
+{
+	int	cost;
+	int	best_cost;
+	int	res;
+	stck*	curr;
+
+	cost = 0;
+	best_cost = 2147483647;
+	curr = head_b;
+	res = head_b->data;
+	while(curr)
+	{
+		cost = total_cost(calc_cost(find_pos(head_b,curr->data),lstack(head_b)),calc_cost(best_pos(head_a,curr->data),lstack(head_a)));
+		if (cost < best_cost)
+		{
+			best_cost = cost;
+			res = curr->data;
+		}
+		curr = curr->next;
+	}
+	return (res);
+}
+
+void move_sort2(stck* head_a, stck* head_b, int cost_a ,int cost_b)
+{
+	if (cost_b < 0)
+	{
+	while (cost_b++ != 0)
+		rrb(&head_b,0);
+	}
+	else  if(cost_b > 0)
+	{
+		while (cost_b-- != 0)
+			rb(&head_b,0);
+	}
+	if (cost_a < 0)
+	{
+		while (cost_a++ != 0)
+			rra(&head_a,0);
+	}
+	else  if(cost_a > 0)
+	{
+		while (cost_a-- != 0)
+			ra(&head_a,0);
+	}
+}
+
+void move_sort(stck* head_a, stck* head_b, int data)
+{
+	int cost_a;
+	int cost_b;
+
+	cost_a = calc_cost(best_pos(head_a,data),lstack(head_a));
+	cost_b = calc_cost(find_pos(head_b,data),lstack(head_b));
+	if (cost_b >= 0 && cost_a >= 0)
+	{
+		while(cost_b != 0 && cost_a != 0 )
+		{
+			rr(&head_a,&head_b);
+			cost_b--;
+			cost_a--;
+		}
+	}
+	else if (cost_b <= 0 && cost_a <= 0)
+	{
+		while(cost_b != 0 && cost_a != 0 )
+		{
+			rrr(&head_a,&head_b);
+			cost_b++;
+			cost_a++;
+		}
+	}
+	move_sort2(head_a, head_b, cost_a ,cost_b);
+	pa(&head_a,&head_b);
+}
+
+int	find_min_pos(stck *head)
+{
+	int tmp;
+	int pos;
+	int i;
+
+	tmp = head->data;
+	i = 0;
+	pos = 0;
+	while(head)
+	{
+		if (head->data < tmp)
+		{
+			tmp = head->data;
+			pos  = i;
+		}
+		head = head->next;
+		i++;
+	}
+	return (pos);
+}
+
+void	turk(stck **head_a, stck **head_b)
+{
+	int cost;
+	int	bmove;
+
+	cost = 0;
+	bmove = 0;
+	while(lstack((*head_a)) > 3)
+		pb(head_a,head_b);
+	sort3(head_a);
+	while((*head_b) != NULL)
+	{
+		bmove = best_move((*head_a),(*head_b));
+		move_sort((*head_a), (*head_b), bmove);
+	}
+	cost = calc_cost(find_min_pos((*head_a)),lstack((*head_a)));
+	if(cost < 0)
+	{
+		while(cost++ != 0)
+			rra(head_a,0);
+	}
+	else
+	{
+		while(cost-- != 0)
+			ra(head_a,0);
+	}
+}
+
+int	verif_err(int argc, char *argv[], stck **head)
 {
 	int	i;
-	if(!isdigit_tab(argvv2))
+	if(!isdigit_tab(argv))
 	{
 		write(2,"Error\n",6);
 		exit(1);
 	}
 	i = 1;
-	while(i < argcv2)
+	while(i < argc)
 	{
-		pushback(head,ft_atoi(argvv2[i]));
+		pushback(head,ft_atoi(argv[i]));
 		i++;
 	}
 	if(!verifdoublon(*head))
@@ -138,13 +254,14 @@ int	verif_err(int argcv2, char *argvv2[], stck **head)
 	return (1);
 }
 
-void	push_swap(stck **a, stck **b, int argcv2)
+void	push_swap(stck **a, stck **b, int argc)
 {
-	(void) b;
-	if(argcv2 == 4)
+	if(argc == 4)
 		sort3(a);
-	else if(argcv2 == 3)
+	else if(argc == 3)
 		sort2(a);
+	else
+		turk(a,b);
 }
 
 int main(int argc, char *argv[])
@@ -153,12 +270,16 @@ int main(int argc, char *argv[])
 	stck *b;
 
 	a = NULL;
-	b= NULL;
+	b = NULL;
 	if(verif_err(argc,argv,&a) &&  !is_sorted(a))
 		push_swap(&a,&b,argc);
-	printf("cost :%d\n",calc_cost(best_pos(a,2),lstack(a)));
+	printf("cost :%d\n",calc_cost(find_pos(a,2),lstack(a)));
+	printf("Position : %d\n",find_pos(a,2));
+	printf("Best Pos : %d\n",best_pos(a,2));
+	printf("Min Pos : %d\n",find_min_pos(a));
 	printlist(a);
 	free_list(a);
 	free_list(b);
 	return (0);
 }
+ 
