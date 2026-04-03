@@ -21,10 +21,10 @@ typedef  struct stck  {
 	struct stck *next;
 } stck;
 
-
+char	**ft_split(char const *s, char c);
 void	push_max(stck **head_a, stck **head_b, int data);
 int	is_max(stck *head, int data);
-int	verif_err(int argc, char *argv[], stck **head);
+int	verif_err(int argc, char *argv[], stck **head,int flg);
 void move_sort2(stck  **head_a, stck **head_b, int cost_a ,int cost_b);
 void move_sort(stck **head_a, stck **head_b, int data);
 int	best_move(stck *head_a , stck *head_b);

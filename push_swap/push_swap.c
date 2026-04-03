@@ -95,10 +95,25 @@ int main(int argc, char *argv[])
 { 
 	stck *a;
 	stck *b;
+	int	i;
+	int flg;
 
+	i = 0;
+	flg = 0;
 	a = NULL;
 	b = NULL;
-	if(verif_err(argc,argv,&a) &&  !is_sorted(a))
+	if(argc == 2)
+	{
+		argv = ft_split(argv[1],' ');
+		while(argv[i])
+		{
+		printf("i :%d  nb:%s\n",i,argv[i]);
+			i++;
+		}
+		argc = i;
+		flg = 1;
+	}
+	if(verif_err(argc,argv,&a,flg) &&  !is_sorted(a))
 		push_swap(&a,&b,argc);
 	printf("Trier? : %d",is_sorted(a));
 	printlist(a);

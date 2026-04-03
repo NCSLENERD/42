@@ -43,7 +43,7 @@ void popback(stck **head)
 	free(curr);
 }
 
-int	verif_err(int argc, char *argv[], stck **head)
+int	verif_err(int argc, char *argv[], stck **head,int flg)
 {
 	int	i;
 	if(!isdigit_tab(argv))
@@ -51,7 +51,9 @@ int	verif_err(int argc, char *argv[], stck **head)
 		write(2,"Error\n",6);
 		exit(1);
 	}
-	i = 1;
+	i = 0;
+	if (flg == 0)
+		i = 1;
 	while(i < argc)
 	{
 		pushback(head,ft_atoi(argv[i]));
