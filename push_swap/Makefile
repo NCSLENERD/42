@@ -12,7 +12,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 NAME = pushswap
-SRC = push_swap.c ft_putnbr_fd.c push_swap_utils.c push_swap_utils2.c push_swap_utils3.c list_utils.c list_utils2.c ft_atoi.c push_swap_utils4.c
+SRC = push_swap.c ft_putnbr_fd.c push_swap_utils.c push_swap_utils2.c push_swap_utils3.c list_utils.c list_utils2.c ft_atoi.c push_swap_utils4.c push_swap_utils5.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

@@ -33,8 +33,8 @@ void rb(stck** head,int flg)
 
 void rr(stck** head_a , stck** head_b)
 {
-	rra(head_a,1);
-	rrb(head_b,1);
+	ra(head_a,1);
+	rb(head_b,1);
 	write(1,"rr\n",4);
 }
 

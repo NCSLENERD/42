@@ -39,9 +39,10 @@ void printlist(stck *head)
 	while(curr)
 	{
 		ft_putnbr_fd(curr->data,1);
-		write(1,"\n",1);
+		write(1,", ",1);
 		curr = curr->next;
 	}
+	write(1,"\n",1);
 }
 
 void pushfront(stck **head, int nb)

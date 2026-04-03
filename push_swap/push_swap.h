@@ -21,6 +21,18 @@ typedef  struct stck  {
 	struct stck *next;
 } stck;
 
+
+void	push_max(stck **head_a, stck **head_b, int data);
+int	is_max(stck *head, int data);
+int	verif_err(int argc, char *argv[], stck **head);
+void move_sort2(stck  **head_a, stck **head_b, int cost_a ,int cost_b);
+void move_sort(stck **head_a, stck **head_b, int data);
+int	best_move(stck *head_a , stck *head_b);
+int total_cost(int ca, int cb);
+int calc_cost(int pos ,int len);
+int	find_min_pos(stck *head);
+int best_pos(stck *head, int data);
+int	find_pos(stck *head, int data);
 int total_cost(int ca, int cb);
 int ft_abs(int n);
 int	ft_max(int a, int b);

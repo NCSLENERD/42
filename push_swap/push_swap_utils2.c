@@ -41,8 +41,8 @@ void rrb(stck** head,int flg)
 
 void rrr(stck** head_a, stck** head_b)
 {
-	ra(head_a,1);
-	rb(head_b,1);
+	rra(head_a,1);
+	rrb(head_b,1);
 	write(1,"rrr\n",4);
 }
 
