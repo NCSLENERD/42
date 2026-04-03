@@ -11,40 +11,41 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void ra(stck** head,int flg)
+void	ra(t_stck **head, int flg)
 {
-	if((*head) == NULL || (*head)->next == NULL)
-		return;
-	pushback(head,(*head)->data);
+	if ((*head) == NULL || (*head)->next == NULL)
+		return ;
+	pushback(head, (*head)->data);
 	popfront(head);
-	if(flg == 0)
-			write(1,"ra\n",4);
+	if (flg == 0)
+		write(1, "ra\n", 3);
 }
 
-void rb(stck** head,int flg)
+void	rb(t_stck **head, int flg)
 {
-	if((*head) == NULL || (*head)->next == NULL)
-		return;
-	pushback(head,(*head)->data);
+	if ((*head) == NULL || (*head)->next == NULL)
+		return ;
+	pushback(head, (*head)->data);
 	popfront(head);
-	if(flg == 0)
-			write(1,"rb\n",4);
+	if (flg == 0)
+		write(1, "rb\n", 3);
 }
 
-void rr(stck** head_a , stck** head_b)
+void	rr(t_stck **head_a, t_stck **head_b)
 {
-	ra(head_a,1);
-	rb(head_b,1);
-	write(1,"rr\n",4);
+	ra(head_a, 1);
+	rb(head_b, 1);
+	write(1, "rr\n", 3);
 }
 
-int	lstack(stck *head)
+int	lstack(t_stck *head)
 {
-	int	i;
-	stck *curr;
+	int		i;
+	t_stck	*curr;
+
 	i = 0;
 	curr = head;
-	while(curr)
+	while (curr)
 	{
 		i++;
 		curr = curr->next;
@@ -52,20 +53,20 @@ int	lstack(stck *head)
 	return (i);
 }
 
-int	verifdoublon(stck *head)
+int	verifdoublon(t_stck *head)
 {
-	stck *curr1;
-	stck *curr2;
-	
-	if(head == NULL)
-		return(1);
+	t_stck	*curr1;
+	t_stck	*curr2;
+
+	if (head == NULL)
+		return (1);
 	curr1 = head;
-	while(curr1->next)
+	while (curr1->next)
 	{
 		curr2 = curr1->next;
-		while(curr2)
+		while (curr2)
 		{
-			if(curr1->data == curr2->data)
+			if (curr1->data == curr2->data)
 				return (0);
 			curr2 = curr2->next;
 		}
@@ -73,4 +74,3 @@ int	verifdoublon(stck *head)
 	}
 	return (1);
 }
-

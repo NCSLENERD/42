@@ -12,49 +12,51 @@
 
 #include "push_swap.h"
 
-void sa(stck** head,int flg)
+void	sa(t_stck **head, int flg)
 {
-	int tmp;
-	if(*head != NULL && (*head)->next != NULL)
+	int	tmp;
+
+	if (*head != NULL && (*head)->next != NULL)
 	{
 		tmp = (*head)->data;
 		(*head)->data = (*head)->next->data;
 		(*head)->next->data = tmp;
-		if(flg == 0)
-			write(1,"sa\n",3);
+		if (flg == 0)
+			write(1, "sa\n", 3);
 	}
 }
 
-void sb(stck** head,int flg)
+void	sb(t_stck **head, int flg)
 {
-	int tmp;
-	if(*head != NULL && (*head)->next != NULL)
+	int	tmp;
+
+	if (*head != NULL && (*head)->next != NULL)
 	{
 		tmp = (*head)->data;
 		(*head)->data = (*head)->next->data;
 		(*head)->next->data = tmp;
-		if(flg == 0)
-			write(1,"sb\n",3);
+		if (flg == 0)
+			write(1, "sb\n", 3);
 	}
 }
 
-void ss(stck** head_a, stck** head_b)
+void	ss(t_stck **head_a, t_stck **head_b)
 {
-	sa(head_a,1);
-	sb(head_b,1);
-	write(1,"ss\n",3);
+	sa(head_a, 1);
+	sb(head_b, 1);
+	write(1, "ss\n", 3);
 }
 
-void pa(stck** head_a, stck **head_b)
+void	pa(t_stck **head_a, t_stck **head_b)
 {
-	pushfront(head_a,(*head_b)->data);
+	pushfront(head_a, (*head_b)->data);
 	popfront(head_b);
-	write(1,"pa\n",3);
+	write(1, "pa\n", 3);
 }
 
-void pb(stck** head_a, stck **head_b)
+void	pb(t_stck **head_a, t_stck **head_b)
 {
-	pushfront(head_b,(*head_a)->data);
+	pushfront(head_b, (*head_a)->data);
 	popfront(head_a);
-	write(1,"pb\n",3);
+	write(1, "pb\n", 3);
 }

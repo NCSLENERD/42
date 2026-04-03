@@ -11,54 +11,55 @@
 /* ************************************************************************** */
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
-typedef  struct stck  {
-	int data;
-	struct stck *prev;
-	struct stck *next;
-} stck;
+typedef struct stck
+{
+	int			data;
+	struct stck	*prev;
+	struct stck	*next;
+}	t_stck;
 
+void	rt_err(void);
 char	**ft_split(char const *s, char c);
-void	push_max(stck **head_a, stck **head_b, int data);
-int	is_max(stck *head, int data);
-int	verif_err(int argc, char *argv[], stck **head,int flg);
-void move_sort2(stck  **head_a, stck **head_b, int cost_a ,int cost_b);
-void move_sort(stck **head_a, stck **head_b, int data);
-int	best_move(stck *head_a , stck *head_b);
-int total_cost(int ca, int cb);
-int calc_cost(int pos ,int len);
-int	find_min_pos(stck *head);
-int best_pos(stck *head, int data);
-int	find_pos(stck *head, int data);
-int total_cost(int ca, int cb);
-int ft_abs(int n);
-int	ft_max(int a, int b);
-int	is_sorted(stck *head);
-int	isdigit_tab(char **tab);
-int	verifdoublon(stck *head);
-int	lstack(stck *head);
-int	ft_atoi(const char *nptr);
-void printlist(stck *head);
-void free_list(stck* head);
-stck *createNode(int nb);
+void	push_max(t_stck **head_a, t_stck **head_b, int data);
+int		is_max(t_stck *head, int data);
+int		verif_err(int argc, char *argv[], t_stck **head, int flg);
+void	move_sort(t_stck **head_a, t_stck **head_b, int data);
+int		best_move(t_stck *head_a, t_stck *head_b);
+int		total_cost(int ca, int cb);
+int		calc_cost(int pos, int len);
+int		find_min_pos(t_stck *head);
+int		best_pos(t_stck *head, int data);
+int		find_pos(t_stck *head, int data);
+int		total_cost(int ca, int cb);
+int		ft_abs(int n);
+int		ft_max(int a, int b);
+int		is_sorted(t_stck *head);
+int		isdigit_tab(char **tab, int flg);
+int		verifdoublon(t_stck *head);
+int		lstack(t_stck *head);
+int		ft_atoi(const char *nptr);
+void	printlist(t_stck *head);
+void	free_list(t_stck *head);
+t_stck	*createNode(int nb);
 void	ft_putnbr_fd(int n, int fd);
-void popback(stck **head);
-void popfront(stck **head);
-void pushback(stck **head, int nb);
-void pushfront(stck **head, int nb);
-void sa(stck** head,int flg);
-void sb(stck** head,int flg);
-void ss(stck** head_a, stck** head_b);
-void pa(stck** head_a, stck **head_b);
-void pb(stck** head_a, stck **head_b);
-void ra(stck** head,int flg);
-void rb(stck** head,int flg);
-void rr(stck** head_a, stck** head_b);
-void rra(stck** head,int flg);
-void rrb(stck** head,int flg);
-void rrr(stck** head_a , stck** head_b);
+void	popback(t_stck **head);
+void	popfront(t_stck **head);
+void	pushback(t_stck **head, int nb);
+void	pushfront(t_stck **head, int nb);
+void	sa(t_stck **head, int flg);
+void	sb(t_stck **head, int flg);
+void	ss(t_stck **head_a, t_stck **head_b);
+void	pa(t_stck **head_a, t_stck **head_b);
+void	pb(t_stck **head_a, t_stck **head_b);
+void	ra(t_stck **head, int flg);
+void	rb(t_stck **head, int flg);
+void	rr(t_stck **head_a, t_stck **head_b);
+void	rra(t_stck **head, int flg);
+void	rrb(t_stck **head, int flg);
+void	rrr(t_stck **head_a, t_stck **head_b);
 
 #endif

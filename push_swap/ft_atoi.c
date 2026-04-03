@@ -33,11 +33,14 @@ int	ft_atoi(const char *nptr)
 		result = result * 10;
 		result = result + (nptr[i] - '0');
 		if (result * sign > 2147483647 || result * sign < -2147483648)
-		{
-			write(2,"Error\n",6);
-			exit(1);
-		}
+			rt_err();
 		i++;
 	}
 	return (result * sign);
+}
+
+void	rt_err(void)
+{
+	write (2, "Error\n", 6);
+	exit(1);
 }

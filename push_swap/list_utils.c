@@ -11,61 +11,70 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-stck *createNode(int nb)
+t_stck	*create_node(int nb)
 {
-	stck *newnode = malloc(sizeof(stck));
-	if(newnode == NULL)
-		return (NULL);
+	t_stck	*newnode;
 
+	newnode = malloc(sizeof(t_stck));
+	if (newnode == NULL)
+		return (NULL);
 	newnode->data = nb;
 	newnode->next = NULL;
-    newnode->prev = NULL;
-	return newnode;
+	newnode->prev = NULL;
+	return (newnode);
 }
 
-void free_list(stck* head) {
-    stck* tmp;
-
-    while (head != NULL) {
-        tmp = head;
-        head = head->next;
-        free(tmp);
-    }
-}
-
-void printlist(stck *head)
+void	free_list(t_stck *head)
 {
-	stck *curr = head;
-	while(curr)
+	t_stck	*tmp;
+
+	while (head != NULL)
 	{
-		ft_putnbr_fd(curr->data,1);
-		write(1,", ",1);
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+}
+
+void	printlist(t_stck *head)
+{
+	t_stck	*curr;
+
+	curr = head;
+	while (curr)
+	{
+		ft_putnbr_fd(curr->data, 1);
+		write(1, ", ", 1);
 		curr = curr->next;
 	}
-	write(1,"\n",1);
+	write(1, "\n", 1);
 }
 
-void pushfront(stck **head, int nb)
+void	pushfront(t_stck **head, int nb)
 {
-    stck *newnode = createNode(nb);
-    newnode->next = *head;
-    newnode->prev = NULL;
-    if (*head != NULL)
-        (*head)->prev = newnode;
+	t_stck	*newnode;
 
-    *head = newnode;
+	newnode = create_node(nb);
+	newnode->next = *head;
+	newnode->prev = NULL;
+	if (*head != NULL)
+		(*head)->prev = newnode;
+	*head = newnode;
 }
 
-void pushback(stck **head, int nb)
+void	pushback(t_stck **head, int nb)
 {
+	t_stck	*newnode;
+	t_stck	*curr;
+
 	if (*head == NULL)
 	{
-		*head = createNode(nb);
+		*head = create_node(nb);
 		return ;
 	}
-    stck *newnode = createNode(nb);
-	stck *curr = *head;
-	while(curr->next)
+	newnode = create_node(nb);
+	curr = *head;
+	while (curr->next)
 		curr = curr->next;
 	curr->next = newnode;
 	newnode->prev = curr;

@@ -19,28 +19,28 @@ int	ft_max(int a, int b)
 		return (b);
 }
 
-int ft_abs(int n)
+int	ft_abs(int n)
 {
 	if (n < 0)
 		n = n * -1;
 	return (n);
 }
 
-int	find_min_pos(stck *head)
+int	find_min_pos(t_stck *head)
 {
-	int tmp;
-	int pos;
-	int i;
+	int	tmp;
+	int	pos;
+	int	i;
 
 	tmp = head->data;
 	i = 0;
 	pos = 0;
-	while(head)
+	while (head)
 	{
 		if (head->data < tmp)
 		{
 			tmp = head->data;
-			pos  = i;
+			pos = i;
 		}
 		head = head->next;
 		i++;
@@ -48,18 +48,18 @@ int	find_min_pos(stck *head)
 	return (pos);
 }
 
-int best_pos(stck *head, int data)
+int	best_pos(t_stck *head, int data)
 {
-	stck *curr;
-	int	i;
-	int	best_pos;
-	int	val;
+	t_stck	*curr;
+	int		i;
+	int		best_pos;
+	int		val;
 
 	best_pos = lstack(head);
 	i = 0;
 	val = 2147483647;
 	curr = head;
-	while(curr)
+	while (curr)
 	{
 		if (curr->data > data && curr->data < val)
 		{
@@ -69,19 +69,20 @@ int best_pos(stck *head, int data)
 		i++;
 		curr = curr->next;
 	}
-	return(best_pos);
+	return (best_pos);
 }
-int	find_pos(stck *head, int data)	
+
+int	find_pos(t_stck *head, int data)
 {
-	stck *curr;
-	int	pos;
+	t_stck	*curr;
+	int		pos;
 
 	pos = 0;
 	curr = head;
-	while(curr)
+	while (curr)
 	{
 		if (curr->data == data)
-			return(pos);
+			return (pos);
 		pos++;
 		curr = curr->next;
 	}
