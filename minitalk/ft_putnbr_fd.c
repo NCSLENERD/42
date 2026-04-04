@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmayela <nmayela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 02:07:16 by nmayela           #+#    #+#             */
-/*   Updated: 2026/04/04 02:07:17 by nmayela          ###   ########.fr       */
+/*   Created: 2025/12/09 22:54:45 by nmayela           #+#    #+#             */
+/*   Updated: 2025/12/09 22:54:46 by nmayela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
-void handler(int sig)
+void	ft_putnbr_fd(int n, int fd, int *res)
 {
-    static int      bits;
-    static char     c;
+	char	c;
 
-	if (sig == SIGUSR2)
-		c |= (1 << bits);
-    bits++;
-    if (bits == 8)
-    {
-        write(1, &c, 1);
-        bits = 0;
-        c = 0;
-    }
-}
-//TODO FAIRE L ' ACK
-int main(void)
-{
-	ft_printf("%d\n",getpid());
-    signal(SIGUSR1,handler);
-    signal(SIGUSR2,handler);
-	while(1)
-		pause();
+	if (n == -2147483648)
+	{
+		ft_putstr_fd_mod("-2147483648", fd, res);
+		return ;
+	}
+	if (n < 0)
+	{
+		n = -n;
+		ft_putchar_fd('-', fd, res);
+	}
+	if (n < 10)
+	{
+		c = (n % 10) + '0';
+		ft_putchar_fd(c, fd, res);
+		return ;
+	}
+	ft_putnbr_fd((n / 10), fd, res);
+	c = (n % 10) + '0';
+	ft_putchar_fd(c, fd, res);
 }

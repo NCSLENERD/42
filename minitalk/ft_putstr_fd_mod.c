@@ -1,37 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putstr_fd_mod.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmayela <nmayela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 02:07:16 by nmayela           #+#    #+#             */
-/*   Updated: 2026/04/04 02:07:17 by nmayela          ###   ########.fr       */
+/*   Created: 2025/12/09 22:40:01 by nmayela           #+#    #+#             */
+/*   Updated: 2025/12/09 22:40:02 by nmayela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
-void handler(int sig)
+static size_t	ft_strlen(const char *str)
 {
-    static int      bits;
-    static char     c;
+	size_t	i;
 
-	if (sig == SIGUSR2)
-		c |= (1 << bits);
-    bits++;
-    if (bits == 8)
-    {
-        write(1, &c, 1);
-        bits = 0;
-        c = 0;
-    }
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
-//TODO FAIRE L ' ACK
-int main(void)
+
+void	ft_putstr_fd_mod(char *s, int fd, int *res)
 {
-	ft_printf("%d\n",getpid());
-    signal(SIGUSR1,handler);
-    signal(SIGUSR2,handler);
-	while(1)
-		pause();
+	size_t	len;
+
+	if (!s)
+	{
+		ft_putstr_fd_mod("(null)", fd, res);
+		return ;
+	}
+	len = ft_strlen(s);
+	*res = len + *res;
+	write (fd, s, len);
 }
+/*int main(void)
+{
+	int *res;
+	int rr;
+	rr = 0;
+	res = &rr;
+	ft_putstr_fd_mod(NULL, 1, res);
+	ft_putnbr_fd(rr,1,res);
+}*/

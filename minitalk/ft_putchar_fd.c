@@ -1,37 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmayela <nmayela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 02:07:16 by nmayela           #+#    #+#             */
-/*   Updated: 2026/04/04 02:07:17 by nmayela          ###   ########.fr       */
+/*   Created: 2025/12/09 22:56:04 by nmayela           #+#    #+#             */
+/*   Updated: 2025/12/09 22:56:05 by nmayela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
-void handler(int sig)
+void	ft_putchar_fd(char c, int fd, int *res)
 {
-    static int      bits;
-    static char     c;
-
-	if (sig == SIGUSR2)
-		c |= (1 << bits);
-    bits++;
-    if (bits == 8)
-    {
-        write(1, &c, 1);
-        bits = 0;
-        c = 0;
-    }
-}
-//TODO FAIRE L ' ACK
-int main(void)
-{
-	ft_printf("%d\n",getpid());
-    signal(SIGUSR1,handler);
-    signal(SIGUSR2,handler);
-	while(1)
-		pause();
+	(*res)++;
+	write(fd, &c, 1);
 }

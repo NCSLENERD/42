@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmayela <nmayela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 02:07:16 by nmayela           #+#    #+#             */
-/*   Updated: 2026/04/04 02:07:17 by nmayela          ###   ########.fr       */
+/*   Created: 2025/12/09 17:11:56 by nmayela           #+#    #+#             */
+/*   Updated: 2025/12/09 17:12:01 by nmayela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
-void handler(int sig)
+void	ft_putnbr_unsigned(unsigned int n, int *res)
 {
-    static int      bits;
-    static char     c;
+	char	c;
 
-	if (sig == SIGUSR2)
-		c |= (1 << bits);
-    bits++;
-    if (bits == 8)
-    {
-        write(1, &c, 1);
-        bits = 0;
-        c = 0;
-    }
-}
-//TODO FAIRE L ' ACK
-int main(void)
-{
-	ft_printf("%d\n",getpid());
-    signal(SIGUSR1,handler);
-    signal(SIGUSR2,handler);
-	while(1)
-		pause();
+	if (n < 10)
+	{
+		c = (n % 10) + '0';
+		ft_putchar_fd(c, 1, res);
+		return ;
+	}
+	ft_putnbr_unsigned((n / 10), res);
+	c = (n % 10) + '0';
+	ft_putchar_fd(c, 1, res);
 }

@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmayela <nmayela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 02:07:16 by nmayela           #+#    #+#             */
-/*   Updated: 2026/04/04 02:07:17 by nmayela          ###   ########.fr       */
+/*   Created: 2025/12/09 17:12:06 by nmayela           #+#    #+#             */
+/*   Updated: 2025/12/09 17:12:07 by nmayela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
-void handler(int sig)
+void	ft_putnbr_base(int n, char *base, int *res)
 {
-    static int      bits;
-    static char     c;
+	int				c;
+	unsigned int	u;
+	unsigned int	len_base;
 
-	if (sig == SIGUSR2)
-		c |= (1 << bits);
-    bits++;
-    if (bits == 8)
-    {
-        write(1, &c, 1);
-        bits = 0;
-        c = 0;
-    }
-}
-//TODO FAIRE L ' ACK
-int main(void)
-{
-	ft_printf("%d\n",getpid());
-    signal(SIGUSR1,handler);
-    signal(SIGUSR2,handler);
-	while(1)
-		pause();
+	if (!base)
+		return ;
+	len_base = 0;
+	while (base[len_base])
+		len_base++;
+	u = (unsigned int) n;
+	if (u < len_base)
+	{
+		c = (u % len_base);
+		ft_putchar_fd(base[c], 1, res);
+		return ;
+	}
+	ft_putnbr_base((u / len_base), base, res);
+	c = (u % len_base);
+	ft_putchar_fd(base[c], 1, res);
 }
