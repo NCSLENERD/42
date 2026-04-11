@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wextra -Werror -Wall
 NAME_CLIENT = client
 NAME_SERVER = server
-SRC_CLIENT = client.c ft_atoi.c
+SRC_CLIENT = client.c ft_atoi.c ft_printf.c ft_putnbr_fd.c ft_putchar_fd.c ft_putstr_fd_mod.c ft_putnbr_unsigned.c ft_putnbr_base.c ft_putnbr_base_ptr.c
 SRC_SERVER = server.c ft_printf.c ft_putnbr_fd.c ft_putchar_fd.c ft_putstr_fd_mod.c ft_putnbr_unsigned.c ft_putnbr_base.c ft_putnbr_base_ptr.c  
 
 all: $(NAME_SERVER) $(NAME_CLIENT)
