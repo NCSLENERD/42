@@ -12,7 +12,7 @@
 #include "so_long.h"
 #include <fcntl.h>
 #include <stdio.h>
-/*verifier si le files termine par .ber*/
+/*faire flood fill /!\ */
 
 int	ft_strlenV2(char *str)
 {
