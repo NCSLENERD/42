@@ -162,69 +162,73 @@ int	verif_lcontent(char *str)
 
 int	verif_c(char **str, int map_height)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 	int count;
 
-	i = 0;
-	j = 0;
+	x = 0;
+	y = 0;
 	count = 0;
-	while(j < map_height )
+	while(x < map_height )
 	{
-		while(str[j][i])
+		while(str[x][y])
 		{
-			if(str[j][i] == 'C')
+			if(str[x][y] == 'C')
 				count++;
-			i++;
+			y++;
 		}
-		j++;
-		i = 0;
+		x++;
+		y = 0;
 	}
 	return (count);
 }
 
 int	verif_e(char **str, int map_height)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 	int count;
 
-	i = 0;
-	j = 0;
+	x = 0;
+	y = 0;
 	count = 0;
-	while(j < map_height )
+	while(x < map_height )
 	{
-		while(str[j][i])
+		while(str[x][y])
 		{
-			if(str[j][i] == 'E')
+			if(str[x][y] == 'E')
 				count++;
-			i++;
+			y++;
 		}
-		j++;
-		i = 0;
+		x++;
+		y = 0;
 	}
 	return (count);
 }
 
-int	verif_p(char **str, int map_height)
+int	verif_p(char **str, t_game *game)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 	int count;
 
-	i = 0;
-	j = 0;
+	x = 0;
+	y = 0;
 	count = 0;
-	while(j < map_height )
+	while(x < game->map_height )
 	{
-		while(str[j][i])
+		while(str[x][y])
 		{
-			if(str[j][i] == 'P')
+			if(str[x][y] == 'P')
+			{
+				game->player_x = x;
+				game->player_y = y;
 				count++;
-			i++;
+			}
+			y++;
 		}
-		j++;
-		i = 0;
+		x++;
+		y = 0;
 	}
 	return (count);
 }
@@ -247,7 +251,7 @@ int verif_content(t_game *game)
 		i++;
 	}
 	c = verif_c(game->map, game->map_height);
-	p = verif_p(game->map, game->map_height);
+	p = verif_p(game->map, game);
 	e = verif_e(game->map, game->map_height);
 	if( c >= 1 && p == 1 && e == 1)
 	{
@@ -284,6 +288,8 @@ int main()
 	printf("borne : %d\n",verif_borne(game));
 	printf("content : %d\n",verif_content(&game));
 	printf("files verif : %d \n",verif_files("....ber"));
+	printf("player pos x : %d\n",game.player_x);
+	printf("player pos y : %d\n",game.player_y);
 
 	return (0);
 }
