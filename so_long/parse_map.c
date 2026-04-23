@@ -12,8 +12,20 @@
 #include "so_long.h"
 #include <fcntl.h>
 #include <stdio.h>
-/*map doit faire plus de 2 colonnes , toutes les lignes ont la meme taille ,
-verifier si map carré accepter , verifier si map a deux colonnes ql comportement ? a une colonne ? une ligne ? 2 lignes ? car ce sera remplit de mur*/
+/*verifier si le files termine par .ber*/
+
+int	ft_strlenV2(char *str)
+{
+	int	i;
+
+	i = 0;
+	if(!str)
+		return(0);
+	while(str[i])
+		i++;
+	return(i);
+}
+
 void	map_height(t_game *game, char *filename)
 {
 	int		fd;
@@ -38,7 +50,25 @@ void	map_height(t_game *game, char *filename)
 	close(fd);
 }
 
-void	parse_map(t_game *game, char *filename)
+int	verif_files(char *filename)
+{
+	int	len;
+
+	len = ft_strlenV2(filename);
+	if(len <= 4)
+		return(0);
+	if(filename[len - 4] != '.')
+		return(0);
+	if(filename[len - 3] != 'b')
+		return(0);
+	if(filename[len - 2] != 'e')
+		return(0);
+	if(filename[len - 1] != 'r')
+		return(0);
+	return(1);
+}
+
+void	init_map(t_game *game, char *filename)
 {
 	int		fd;
 	char	*line;
@@ -64,6 +94,169 @@ void	parse_map(t_game *game, char *filename)
 	}
 	close(fd);
 }
+
+int	verif_width(t_game *game)
+{
+	int width;
+	int	i;
+
+	width = ft_strlenV2(game->map[0]);
+	i = 0;
+	while(i < game->map_height)
+	{
+		if (width != ft_strlenV2(game->map[i]))
+			return (0);
+		i++;
+	}
+	game->map_width = width;
+	return (1);
+}
+
+int	verif_lborne(char *str)
+{
+	int	i;
+
+	i = 0;
+	if(!str)
+		return(0);
+	while(str[i])
+	{
+		if(str[i] != '1')
+			return (0);
+		i++;
+	}
+	return(1);
+}
+int	verif_borne(t_game game)
+{
+	int	i;
+
+	i = 1;
+	if(!verif_lborne(game.map[0]) || !verif_lborne(game.map[game.map_height - 1]))
+		return (0);
+	while(i < game.map_height - 1)
+	{
+		if(!(game.map[i][0] == '1') || !(game.map[i][game.map_width - 1] == '1'))
+		{
+			printf("borne col fausse\n");
+			return(0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	verif_lcontent(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if(!(str[i] == 'P' || str[i] == '0' || str[i] == '1' || str[i] == 'E' ||str[i] == 'C'))
+			return(0);
+		i++;
+	}
+	return(1);
+}
+
+int	verif_c(char **str, int map_height)
+{
+	int	i;
+	int	j;
+	int count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while(j < map_height )
+	{
+		while(str[j][i])
+		{
+			if(str[j][i] == 'C')
+				count++;
+			i++;
+		}
+		j++;
+		i = 0;
+	}
+	return (count);
+}
+
+int	verif_e(char **str, int map_height)
+{
+	int	i;
+	int	j;
+	int count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while(j < map_height )
+	{
+		while(str[j][i])
+		{
+			if(str[j][i] == 'E')
+				count++;
+			i++;
+		}
+		j++;
+		i = 0;
+	}
+	return (count);
+}
+
+int	verif_p(char **str, int map_height)
+{
+	int	i;
+	int	j;
+	int count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while(j < map_height )
+	{
+		while(str[j][i])
+		{
+			if(str[j][i] == 'P')
+				count++;
+			i++;
+		}
+		j++;
+		i = 0;
+	}
+	return (count);
+}
+
+int verif_content(t_game *game)
+{
+	int	i;
+	int p;
+	int e;
+	int c;
+
+	i = 0;
+	p = 0;
+	e = 0;
+	c = 0;
+	while (i < game->map_height)
+	{
+		if (!verif_lcontent(game->map[i]))
+			return (0);
+		i++;
+	}
+	c = verif_c(game->map, game->map_height);
+	p = verif_p(game->map, game->map_height);
+	e = verif_e(game->map, game->map_height);
+	if( c >= 1 && p == 1 && e == 1)
+	{
+		game->collect_remain = c;
+		return (1);
+	}
+	return (0);
+}
+
 int main()
 {
 	t_game		game;
@@ -78,12 +271,19 @@ int main()
 	game.player_y = 0;
 	game.collect_remain = 0;
 	game.nbmoves = 0;
-	parse_map(&game,"test.ber");
+	init_map(&game,"test.ber");
 	i = 0;
 	while (i < game.map_height)
 	{
-		printf("%s", game.map[i]);
+		printf("%s\n", game.map[i]);
 		i++;
 	}
+	printf("verif width:%d\n",verif_width(&game));
+	printf("width: %d\n",game.map_width);
+	printf("height: %d\n",game.map_height);
+	printf("borne : %d\n",verif_borne(game));
+	printf("content : %d\n",verif_content(&game));
+	printf("files verif : %d \n",verif_files("....ber"));
+
 	return (0);
 }
