@@ -169,16 +169,16 @@ int	verif_c(char **str, int map_height)
 	x = 0;
 	y = 0;
 	count = 0;
-	while(x < map_height )
+	while(y < map_height )
 	{
-		while(str[x][y])
+		while(str[y][x])
 		{
-			if(str[x][y] == 'C')
+			if(str[y][x] == 'C')
 				count++;
-			y++;
+			x++;
 		}
-		x++;
-		y = 0;
+		y++;
+		x = 0;
 	}
 	return (count);
 }
@@ -192,16 +192,16 @@ int	verif_e(char **str, int map_height)
 	x = 0;
 	y = 0;
 	count = 0;
-	while(x < map_height )
+	while(y < map_height )
 	{
-		while(str[x][y])
+		while(str[y][x])
 		{
-			if(str[x][y] == 'E')
+			if(str[y][x] == 'E')
 				count++;
-			y++;
+			x++;
 		}
-		x++;
-		y = 0;
+		y++;
+		x = 0;
 	}
 	return (count);
 }
@@ -215,20 +215,20 @@ int	verif_p(char **str, t_game *game)
 	x = 0;
 	y = 0;
 	count = 0;
-	while(x < game->map_height )
+	while(y < game->map_height )
 	{
-		while(str[x][y])
+		while(str[y][x])
 		{
-			if(str[x][y] == 'P')
+			if(str[y][x] == 'P')
 			{
 				game->player_x = x;
 				game->player_y = y;
 				count++;
 			}
-			y++;
+			x++;
 		}
-		x++;
-		y = 0;
+		y++;
+		x = 0;
 	}
 	return (count);
 }
