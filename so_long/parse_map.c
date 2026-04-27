@@ -358,6 +358,16 @@ int	verif_map(t_game *game)
 	return (1);
 }
 
+void	error_exit(t_game *game , char *msg)
+{
+	write(2,"Error\n",6);
+	write(2,msg,ft_strlenV2(msg));
+	write(2,"\n",1);
+	free_game(game);
+	exit(1);
+
+}
+
 int main(int argc , char * argv[])
 {
 	t_game		game;
@@ -374,21 +384,12 @@ int main(int argc , char * argv[])
 	game.nbmoves = 0;
 
 	if(argc != 2)
-	{
-		write(2,"Error\nToo many arguments\n",25);
-		return (0);
-	}
+		error_exit(&game, "Too few or too many arguments");
 	if (!verif_files(argv[1]))
-	{
-		write(2,"Error\nFilesname\n",16);
-		return (0);
-	}
+		error_exit(&game, "Invalid file name or extension");
 	init_map(&game,argv[1]);
 	if(!verif_map(&game))
-	{
-		write(2,"Error\nMap\n",10);
-		return (0);
-	}
+		error_exit(&game, "Invalid map");
 
 	i = 0;
 	while (i < game.map_height)
