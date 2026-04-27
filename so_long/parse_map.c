@@ -320,12 +320,12 @@ int	is_solvable(char **map, t_game game)
 	return (1);
 }
 
-void	free_tab(char **map, t_game game)
+void	free_tab(char **map, int map_height)
 {
 	int	i;
 	i = 0;
 
-	while (i < game.map_height)
+	while (i < map_height)
 	{
 		free(map[i]);
 		i++;
@@ -341,19 +341,19 @@ int	flood_fill(t_game game)
 	fill(map, game.player_x, game.player_y, game);
 	if(is_solvable(map, game))
 	{
-		free_tab(map, game);
+		free_tab(map, game.map_height);
 		return (1);
 	}
 	else
 	{
-		free_tab(map, game);
+		ree_tab(map, game.map_height);
 		return (0);
 	}
 }
 
-int	verif_map(t_game game)
+int	verif_map(t_game *game)
 {
-	if(!verif_width(&game) || !verif_borne(game) || !verif_content(&game) || !flood_fill(game))
+	if(!verif_width(game) || !verif_borne(*game) || !verif_content(game) || !flood_fill(*game))
 		return (0);
 	return (1);
 }
@@ -387,6 +387,6 @@ int main()
 	printf("files verif : %d \n",verif_files("....ber"));
 	printf("player pos x : %d\n",game.player_x);
 	printf("player pos y : %d\n",game.player_y);
-	printf("verif_map: %d\n",verif_map(game));
+	printf("verif_map: %d\n",verif_map(&game));
 	return (0);
 }
