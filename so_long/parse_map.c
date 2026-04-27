@@ -297,17 +297,25 @@ char **dupmap(t_game game)
 
 void	fill(char ***map, int x, int y, t_game game)
 {
-	if(*map[y][x] != '1')
+	int i;
+	i = 0;
+	while (i < game.map_height)
 	{
-		*map[y][x] = 'V';
+		printf("%s\n", (*map)[i]);
+		i++;
+	}
+	printf("---------------------\n");
+	if((*map)[y][x] != '1'  && (*map)[y][x] != 'V')
+	{
+		(*map)[y][x] = 'V';
 		if(x < game.map_width && y > 0)
-			fill(map, x + 1, y - 1, game);
+			fill(map, x + 1, y, game);
 		if(x > 0 && y < game.map_height)
-			fill(map, x - 1, y + 1, game);
+			fill(map, x, y + 1, game);
 		if(x > 0 && y > 0)
-			fill(map, x - 1, y - 1, game);
-		if(x < game.map_width && y < game.map_height)
-			fill(map, x + 1, y + 1, game);
+			fill(map, x - 1, y, game);
+		if(x < game.map_width && y < game.map_height) 
+			fill(map, x, y - 1, game);
 	}
 	else
 		return;
