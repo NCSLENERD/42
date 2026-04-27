@@ -13,6 +13,7 @@
 #define SO_LONG_H
 
 #include "get_nextline/get_next_line.h"
+#include <fcntl.h>
 
 typedef struct s_game
 {
@@ -28,7 +29,22 @@ typedef struct s_game
 }	t_game;
 
 void	parse_map(t_game *game, char *filename);
-int	ft_strlenV2(char *str);
+int		ft_strlenV2(char *str);
+void	map_height(t_game *game, char *filename);
+int		verif_files(char *filename);
+void	init_map(t_game *game, char *filename);
+void	free_tab(char **map, int map_height);
+void	free_game(t_game *game);
+void	error_exit(t_game *game , char *msg);
+int		ft_strlenV2(char *str);
+int		verif_lcontent(char *str);
+int		verif_ec(char **str, int map_height, char c);
+int		verif_p(char **str, t_game *game);
+int 	verif_content(t_game *game);
+int		verif_map(t_game *game);
+int		verif_width(t_game *game);
+int		verif_lborne(char *str);
+int	verif_borne(t_game game);
 
 #endif
 
