@@ -137,10 +137,7 @@ int	verif_borne(t_game game)
 	while(i < game.map_height - 1)
 	{
 		if(!(game.map[i][0] == '1') || !(game.map[i][game.map_width - 1] == '1'))
-		{
-			printf("borne col fausse\n");
 			return(0);
-		}
 		i++;
 	}
 	return (1);
@@ -333,22 +330,22 @@ void	free_tab(char **map, int map_height)
 	free(map);
 }
 
+void	free_game(t_game *game)
+{
+	if(game->map)
+		free_tab(game->map, game->map_height);
+}
+
 int	flood_fill(t_game game)
 {
 	char **map;
+	int res;
 
 	map = dupmap(game);
 	fill(map, game.player_x, game.player_y, game);
-	if(is_solvable(map, game))
-	{
-		free_tab(map, game.map_height);
-		return (1);
-	}
-	else
-	{
-		free_tab(map, game.map_height);
-		return (0);
-	}
+	res = is_solvable(map, game);
+	free_tab(map, game.map_height);
+	return (res);
 }
 
 int	verif_map(t_game *game)
