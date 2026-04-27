@@ -14,6 +14,8 @@
 
 #include "get_nextline/get_next_line.h"
 #include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 typedef struct s_game
 {
@@ -28,8 +30,6 @@ typedef struct s_game
 	int		nbmoves;
 }	t_game;
 
-void	parse_map(t_game *game, char *filename);
-int		ft_strlenV2(char *str);
 void	map_height(t_game *game, char *filename);
 int		verif_files(char *filename);
 void	init_map(t_game *game, char *filename);

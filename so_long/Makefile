@@ -23,7 +23,7 @@ all : $(NAME)
 $(NAME) : $(MLX_LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) -o $(NAME)
 
-$(:MLX_LIB) :
+$(MLX_LIB) :
 	$(MAKE) -C $(MLX_DIR)
 
 %.o:	%.c
