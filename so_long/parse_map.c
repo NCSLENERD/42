@@ -275,14 +275,14 @@ char **dupmap(t_game game)
 
 void	fill(char **map, int x, int y, t_game game)
 {
-	int i;
+	/*int i;
 	i = 0;
 	while (i < game.map_height)
 	{
 		printf("%s\n", map[i]);
 		i++;
 	}
-	printf("---------------------\n");
+	printf("---------------------\n");*/
 	if(map[y][x] != '1'  && map[y][x] != 'V')
 	{
 		map[y][x] = 'V';
@@ -346,7 +346,7 @@ int	flood_fill(t_game game)
 	}
 	else
 	{
-		ree_tab(map, game.map_height);
+		free_tab(map, game.map_height);
 		return (0);
 	}
 }
@@ -358,7 +358,7 @@ int	verif_map(t_game *game)
 	return (1);
 }
 
-int main()
+int main(int argc , char * argv[])
 {
 	t_game		game;
 	int			i;
@@ -372,21 +372,21 @@ int main()
 	game.player_y = 0;
 	game.collect_remain = 0;
 	game.nbmoves = 0;
-	init_map(&game,"test.ber");
+
+	if(argc != 2)
+		return (0);
+	if (!verif_files(argv[1]))
+	{
+		return (0);
+	}
+	init_map(&game,argv[1]);
+	printf("verif_map: %d\n",verif_map(&game));
+
 	i = 0;
 	while (i < game.map_height)
 	{
 		printf("%s\n", game.map[i]);
 		i++;
 	}
-	printf("verif width:%d\n",verif_width(&game));
-	printf("width: %d\n",game.map_width);
-	printf("height: %d\n",game.map_height);
-	printf("borne : %d\n",verif_borne(game));
-	printf("content : %d\n",verif_content(&game));
-	printf("files verif : %d \n",verif_files("....ber"));
-	printf("player pos x : %d\n",game.player_x);
-	printf("player pos y : %d\n",game.player_y);
-	printf("verif_map: %d\n",verif_map(&game));
 	return (0);
 }
