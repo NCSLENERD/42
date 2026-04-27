@@ -160,7 +160,7 @@ int	verif_lcontent(char *str)
 	return(1);
 }
 
-int	verif_c(char **str, int map_height)
+int	verif_ec(char **str, int map_height, char c)
 {
 	int	x;
 	int	y;
@@ -173,30 +173,7 @@ int	verif_c(char **str, int map_height)
 	{
 		while(str[y][x])
 		{
-			if(str[y][x] == 'C')
-				count++;
-			x++;
-		}
-		y++;
-		x = 0;
-	}
-	return (count);
-}
-
-int	verif_e(char **str, int map_height)
-{
-	int	x;
-	int	y;
-	int count;
-
-	x = 0;
-	y = 0;
-	count = 0;
-	while(y < map_height )
-	{
-		while(str[y][x])
-		{
-			if(str[y][x] == 'E')
+			if(str[y][x] == c)
 				count++;
 			x++;
 		}
@@ -250,9 +227,9 @@ int verif_content(t_game *game)
 			return (0);
 		i++;
 	}
-	c = verif_c(game->map, game->map_height);
+	c = verif_ec(game->map, game->map_height, 'C');
 	p = verif_p(game->map, game);
-	e = verif_e(game->map, game->map_height);
+	e = verif_ec(game->map, game->map_height, 'E');
 	if( c >= 1 && p == 1 && e == 1)
 	{
 		game->collect_remain = c;
@@ -296,19 +273,19 @@ char **dupmap(t_game game)
     return (dup);
 }
 
-void	fill(char ***map, int x, int y, t_game game)
+void	fill(char **map, int x, int y, t_game game)
 {
 	int i;
 	i = 0;
 	while (i < game.map_height)
 	{
-		printf("%s\n", (*map)[i]);
+		printf("%s\n", map[i]);
 		i++;
 	}
 	printf("---------------------\n");
-	if((*map)[y][x] != '1'  && (*map)[y][x] != 'V')
+	if(map[y][x] != '1'  && map[y][x] != 'V')
 	{
-		(*map)[y][x] = 'V';
+		map[y][x] = 'V';
 		if(x < game.map_width - 1)
 			fill(map, x + 1, y, game);
 		if(y < game.map_height - 1)
@@ -344,9 +321,12 @@ int	is_solvable(char **map, t_game game)
 }
 
 
-int	flood_fill(char **map, t_game game)
+int	flood_fill(t_game game)
 {
-	fill(&map, game.player_x, game.player_y, game);
+	char **map;
+
+	map = dupmap(game);
+	fill(map, game.player_x, game.player_y, game);
 	if(is_solvable(map, game))
 		return (1);
 	else
@@ -354,11 +334,17 @@ int	flood_fill(char **map, t_game game)
 
 }
 
+int	verif_map(t_game game)
+{
+	if(!verif_borne(game) || !verif_content(&game) || !verif_width(&game) || !flood_fill(game))
+		return (0);
+	return (1);
+}
+
 int main()
 {
 	t_game		game;
 	int			i;
-	char **test;
 
 	game.mlx = NULL;
 	game.win = NULL;
@@ -384,13 +370,6 @@ int main()
 	printf("files verif : %d \n",verif_files("....ber"));
 	printf("player pos x : %d\n",game.player_x);
 	printf("player pos y : %d\n",game.player_y);
-	test = dupmap(game);
-	printf("solvable : %d\n",flood_fill(test,game));
-	i = 0;
-	while (i < game.map_height)
-	{
-		printf("%s\n", test[i]);
-		i++;
-	}
+	printf("verif_map: %d\n",verif_map(game));
 	return (0);
 }
