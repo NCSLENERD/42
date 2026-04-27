@@ -14,6 +14,38 @@
 #include <stdio.h>
 /*faire flood fill /!\ */
 
+void	free_tab(char **map, int map_height)
+{
+	int	i;
+	i = 0;
+
+	while (i < map_height)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
+void	free_game(t_game *game)
+{
+	if(game->map)
+	{
+		free_tab(game->map, game->map_height);
+		game->map = NULL;
+	}
+}
+
+void	error_exit(t_game *game , char *msg)
+{
+	write(2,"Error\n",6);
+	write(2,msg,ft_strlenV2(msg));
+	write(2,"\n",1);
+	free_game(game);
+	exit(1);
+
+}
+
 int	ft_strlenV2(char *str)
 {
 	int	i;
@@ -34,10 +66,7 @@ void	map_height(t_game *game, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-	{
-		write(1, "Error Cannot open file\n", 23);
-		exit(1);
-	}
+		error_exit(game, "Cannot open map file");
 	line = get_next_line(fd);
 	count = 0;
 	while (line != NULL)
@@ -77,14 +106,11 @@ void	init_map(t_game *game, char *filename)
 	map_height(game,filename);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-	{
-		write(1, "Error Cannot open file\n", 23);
-		exit(1);
-	}
+		error_exit(game, "Cannot open map file");
 	line = get_next_line(fd);
 	game->map = malloc(sizeof(char *) * game->map_height);
 	if(!game->map)
-		exit(1);
+		error_exit(game, "Malloc failed");
 	i = 0;
 	while (line != NULL)
 	{
@@ -317,28 +343,6 @@ int	is_solvable(char **map, t_game game)
 	return (1);
 }
 
-void	free_tab(char **map, int map_height)
-{
-	int	i;
-	i = 0;
-
-	while (i < map_height)
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
-}
-
-void	free_game(t_game *game)
-{
-	if(game->map)
-	{
-		free_tab(game->map, game->map_height);
-		game->map = NULL;
-	}
-}
-
 int	flood_fill(t_game game)
 {
 	char **map;
@@ -356,16 +360,6 @@ int	verif_map(t_game *game)
 	if(!verif_width(game) || !verif_borne(*game) || !verif_content(game) || !flood_fill(*game))
 		return (0);
 	return (1);
-}
-
-void	error_exit(t_game *game , char *msg)
-{
-	write(2,"Error\n",6);
-	write(2,msg,ft_strlenV2(msg));
-	write(2,"\n",1);
-	free_game(game);
-	exit(1);
-
 }
 
 int main(int argc , char * argv[])
