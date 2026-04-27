@@ -18,41 +18,48 @@ int	close_win(void *param)
 	return (0);
 }
 
-int	main(int argc, char *argv[])
-{
-	void	*mlx;
-	void	*win;
-	t_game		game;
-	int			i;
+void  init_game(t_game *game)                                   
+  {                                                                                                                                                                                                                                           
+      game->mlx = NULL;
+      game->win = NULL;                                                                                                                                                                                                                       
+      game->map = NULL;                                           
+      game->map_width = 0;
+      game->map_height = 0;                                                                                                                                                                                                                   
+      game->player_x = 0;
+      game->player_y = 0;                                                                                                                                                                                                                     
+      game->collect_remain = 0;                                   
+      game->nbmoves = 0;
+}
 
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 800, 600, "so_long");
-	mlx_hook(win, 17, 0, close_win, mlx);
-	mlx_loop(mlx);
-
+int  main(int argc, char *argv[])                                                                                                                                                                                                           
+{                                                                                                                                                                                                                                           
+	t_game  game;   
+	int	i;                                                                                                                                                                                                                   
+                                                                  
+	/* 1. init la struct */                                                                                                                       
 	game.mlx = NULL;
-	game.win = NULL;
-	game.map = NULL;
-	game.map_width = 0;
-	game.map_height = 0;
-	game.player_x = 0;
-	game.player_y = 0;
-	game.collect_remain = 0;
-	game.nbmoves = 0;
-
-	if(argc != 2)
-		error_exit(&game, "Too few or too many arguments");
-	if (!verif_files(argv[1]))
-		error_exit(&game, "Invalid file name or extension");
-	init_map(&game,argv[1]);
-	if(!verif_map(&game))
+    game.win = NULL;
+	init_game(&game);                                          
+    if (argc != 2)                                                                                                                                                                                                                          
+		error_exit(&game, "Too few or too many arguments");                                                                                                                                                                                 
+    if (!verif_files(argv[1]))
+		error_exit(&game, "Invalid file name or extension");                                                                                                                                                                                
+    init_map(&game, argv[1]);                                   
+	if (!verif_map(&game))                                                                                                                                                                                                                  
 		error_exit(&game, "Invalid map");
-
 	i = 0;
 	while (i < game.map_height)
 	{
 		printf("%s\n", game.map[i]);
 		i++;
-	}
-	free_game(&game);
-}
+	}                                                                                                                                                                                               
+    game.mlx = mlx_init();
+    game.win = mlx_new_window(game.mlx, 800, 600, "so_long");                                                                                                                                                                               
+    mlx_hook(game.win, 17, 0, close_win, game.mlx);
+	/* 4. (Phase 2 : load_textures + render_map ici) */                                                                                                                                                                                     
+                                                                                                                                                                                                                                              
+    /* 5. Lancer la boucle (BLOQUANT) */                                                                                                                                                                                                    
+    mlx_loop(game.mlx);                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    free_game(&game);
+    return (0);                                                                                                                                                                                                                             
+  }
