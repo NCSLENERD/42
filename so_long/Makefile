@@ -11,17 +11,23 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Werror - Wextra - Wall
+CFLAGS = -Werror -Wextra -Wall
 NAME = so_long
-SRC = flood_fill.c parse_map.c utils.c verif_content.c verif_struct.c so_long.cc
-OBJ = (SRC:.c=.o)
+SRC = flood_fill.c parse_map.c utils.c verif_content.c verif_struct.c so_long.c get_nextline/get_next_line_utils.c get_nextline/get_next_line.c 
+OBJ = $(SRC:.c=.o)
+MLX_DIR = minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11
 
 all : $(NAME)
-$(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+$(NAME) : $(MLX_LIB) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) -o $(NAME)
+
+$(:MLX_LIB) :
+	$(MAKE) -C $(MLX_DIR)
 
 %.o:	%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(MLX_DIR) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

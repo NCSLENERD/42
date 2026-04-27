@@ -44,7 +44,13 @@ int 	verif_content(t_game *game);
 int		verif_map(t_game *game);
 int		verif_width(t_game *game);
 int		verif_lborne(char *str);
-int	verif_borne(t_game game);
+int		verif_borne(t_game game);
+char	*getln(char *str);
+char	**dupmap(t_game game);
+void	fill(char **map, int x, int y, t_game game);
+int		is_solvable(char **map, t_game game);
+int		flood_fill(t_game game);
+
 
 #endif
 

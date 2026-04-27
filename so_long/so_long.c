@@ -54,5 +54,5 @@ int	main(int argc, char *argv[])
 		printf("%s\n", game.map[i]);
 		i++;
 	}
-	free_game(&game)
+	free_game(&game);
 }
