@@ -374,13 +374,21 @@ int main(int argc , char * argv[])
 	game.nbmoves = 0;
 
 	if(argc != 2)
+	{
+		write(2,"Error\nToo many arguments\n",25);
 		return (0);
+	}
 	if (!verif_files(argv[1]))
 	{
+		write(2,"Error\nFilesname\n",16);
 		return (0);
 	}
 	init_map(&game,argv[1]);
-	printf("verif_map: %d\n",verif_map(&game));
+	if(!verif_map(&game))
+	{
+		write(2,"Error\nMap\n",10);
+		return (0);
+	}
 
 	i = 0;
 	while (i < game.map_height)
