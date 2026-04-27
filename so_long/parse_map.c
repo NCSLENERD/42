@@ -333,7 +333,10 @@ void	free_tab(char **map, int map_height)
 void	free_game(t_game *game)
 {
 	if(game->map)
+	{
 		free_tab(game->map, game->map_height);
+		game->map = NULL;
+	}
 }
 
 int	flood_fill(t_game game)
@@ -385,5 +388,6 @@ int main(int argc , char * argv[])
 		printf("%s\n", game.map[i]);
 		i++;
 	}
+	free_game(&game);
 	return (0);
 }
