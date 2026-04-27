@@ -320,6 +320,18 @@ int	is_solvable(char **map, t_game game)
 	return (1);
 }
 
+void	free_tab(char **map, t_game game)
+{
+	int	i;
+	i = 0;
+
+	while (i < game.map_height)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
 
 int	flood_fill(t_game game)
 {
@@ -328,15 +340,20 @@ int	flood_fill(t_game game)
 	map = dupmap(game);
 	fill(map, game.player_x, game.player_y, game);
 	if(is_solvable(map, game))
+	{
+		free_tab(map, game);
 		return (1);
+	}
 	else
+	{
+		free_tab(map, game);
 		return (0);
-
+	}
 }
 
 int	verif_map(t_game game)
 {
-	if(!verif_borne(game) || !verif_content(&game) || !verif_width(&game) || !flood_fill(game))
+	if(!verif_width(&game) || !verif_borne(game) || !verif_content(&game) || !flood_fill(game))
 		return (0);
 	return (1);
 }
