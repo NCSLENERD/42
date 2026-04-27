@@ -270,12 +270,13 @@ char *getln(char *str)
     int i;
 
     i = 0;
-    res = malloc(sizeof(char) * ft_strlenV2(str));
+    res = malloc(sizeof(char) * ft_strlenV2(str) + 1);
     while (str[i])
     {
         res[i] = str[i];
         i++;
     }
+	res[i] = '\0';
     return (res);
 }
 
@@ -308,25 +309,50 @@ void	fill(char ***map, int x, int y, t_game game)
 	if((*map)[y][x] != '1'  && (*map)[y][x] != 'V')
 	{
 		(*map)[y][x] = 'V';
-		if(x < game.map_width && y > 0)
+		if(x < game.map_width - 1)
 			fill(map, x + 1, y, game);
-		if(x > 0 && y < game.map_height)
+		if(y < game.map_height - 1)
 			fill(map, x, y + 1, game);
-		if(x > 0 && y > 0)
+		if(x > 0)
 			fill(map, x - 1, y, game);
-		if(x < game.map_width && y < game.map_height) 
+		if(y > 0) 
 			fill(map, x, y - 1, game);
 	}
 	else
 		return;
 }
 
-void	flood_fill(char **map, t_game game)
+int	is_solvable(char **map, t_game game)
 {
-	fill(&map, game.player_x, game.player_y, game);
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < game.map_height)
+	{
+		while (map[i][j])
+		{
+			if(map[i][j] != 'V' && map[i][j] != '1' && map[i][j] != '0')
+				return (0);
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	return (1);
 }
 
 
+int	flood_fill(char **map, t_game game)
+{
+	fill(&map, game.player_x, game.player_y, game);
+	if(is_solvable(map, game))
+		return (1);
+	else
+		return (0);
+
+}
 
 int main()
 {
@@ -359,14 +385,12 @@ int main()
 	printf("player pos x : %d\n",game.player_x);
 	printf("player pos y : %d\n",game.player_y);
 	test = dupmap(game);
-	flood_fill(test,game);
+	printf("solvable : %d\n",flood_fill(test,game));
 	i = 0;
 	while (i < game.map_height)
 	{
 		printf("%s\n", test[i]);
 		i++;
 	}
-	
-
 	return (0);
 }
