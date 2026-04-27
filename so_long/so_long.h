@@ -28,6 +28,7 @@ typedef struct s_game
 }	t_game;
 
 void	parse_map(t_game *game, char *filename);
+int	ft_strlenV2(char *str);
 
 #endif
 

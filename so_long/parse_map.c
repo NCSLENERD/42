@@ -261,10 +261,70 @@ int verif_content(t_game *game)
 	return (0);
 }
 
+
+//FLOOD FILL 
+
+char *getln(char *str)
+{
+    char *res;
+    int i;
+
+    i = 0;
+    res = malloc(sizeof(char) * ft_strlenV2(str));
+    while (str[i])
+    {
+        res[i] = str[i];
+        i++;
+    }
+    return (res);
+}
+
+char **dupmap(t_game game)
+{
+    int i;
+    char **dup;
+
+    i = 0;
+
+    dup = malloc(sizeof(char *) * game.map_height);
+    while (i < game.map_height)
+    {  
+        dup[i] = getln(game.map[i]);
+        i++;
+    }
+    return (dup);
+}
+
+void	fill(char ***map, int x, int y, t_game game)
+{
+	if(*map[y][x] != '1')
+	{
+		*map[y][x] = 'V';
+		if(x < game.map_width && y > 0)
+			fill(map, x + 1, y - 1, game);
+		if(x > 0 && y < game.map_height)
+			fill(map, x - 1, y + 1, game);
+		if(x > 0 && y > 0)
+			fill(map, x - 1, y - 1, game);
+		if(x < game.map_width && y < game.map_height)
+			fill(map, x + 1, y + 1, game);
+	}
+	else
+		return;
+}
+
+void	flood_fill(char **map, t_game game)
+{
+	fill(&map, game.player_x, game.player_y, game);
+}
+
+
+
 int main()
 {
 	t_game		game;
 	int			i;
+	char **test;
 
 	game.mlx = NULL;
 	game.win = NULL;
@@ -290,6 +350,15 @@ int main()
 	printf("files verif : %d \n",verif_files("....ber"));
 	printf("player pos x : %d\n",game.player_x);
 	printf("player pos y : %d\n",game.player_y);
+	test = dupmap(game);
+	flood_fill(test,game);
+	i = 0;
+	while (i < game.map_height)
+	{
+		printf("%s\n", test[i]);
+		i++;
+	}
+	
 
 	return (0);
 }
