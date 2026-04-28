@@ -49,6 +49,7 @@ int  main(int argc, char *argv[])
     init_map(&game, argv[1]);
 	if (!verif_map(&game))
 		error_exit(&game, "Invalid map");
+  game.map[game.player_y][game.player_x] = '0';
 	i = 0;
 	while (i < game.map_height)
 	{

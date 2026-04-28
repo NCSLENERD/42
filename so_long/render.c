@@ -73,4 +73,6 @@ void    render_map(t_game *game)
         y++;
         x = 0;
     }
+    mlx_put_image_to_window(game->mlx, game->win, game->img_player, game->player_x, game->player_y);
+    
 }
