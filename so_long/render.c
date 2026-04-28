@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "so_long.h"
+#include "minilibx-linux/mlx.h"
 
 void    load_textures(t_game *game)
 {

@@ -56,7 +56,9 @@ char	**dupmap(t_game game);
 void	fill(char **map, int x, int y, t_game game);
 int		is_solvable(char **map, t_game game);
 int		flood_fill(t_game game);
-
+void    load_textures(t_game *game);
+void    render_tile(t_game *game, int x, int y);
+void	render_map(t_game *game);
 
 #endif
 

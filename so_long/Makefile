@@ -13,7 +13,7 @@
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
 NAME = so_long
-SRC = flood_fill.c parse_map.c utils.c verif_content.c verif_struct.c so_long.c get_nextline/get_next_line_utils.c get_nextline/get_next_line.c 
+SRC = flood_fill.c parse_map.c utils.c verif_content.c verif_struct.c so_long.c get_nextline/get_next_line_utils.c get_nextline/get_next_line.c render.c
 OBJ = $(SRC:.c=.o)
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
