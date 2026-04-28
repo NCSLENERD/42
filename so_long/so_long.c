@@ -56,7 +56,7 @@ int  main(int argc, char *argv[])
 		i++;
 	}
   game.mlx = mlx_init();
-  game.win = mlx_new_window(game.mlx, game.map_height * TILE_SIZE, game.map_width * TILE_SIZE, "so_long");
+  game.win = mlx_new_window(game.mlx, game.map_width * TILE_SIZE, game.map_height * TILE_SIZE, "so_long");
   mlx_hook(game.win, 17, 0, close_win, game.mlx);
   load_textures(&game);
   render_map(&game);
