@@ -12,6 +12,7 @@
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
+#define TILE_SIZE 64
 #include "get_nextline/get_next_line.h"
 #include <fcntl.h>
 #include <unistd.h>
