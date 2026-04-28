@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 #include "so_long.h"
 
-void    load_textures()
+void    load_textures(t_game *game)
 {
 
 }
 
-void    render_tile()
+void    render_tile(t_game *game, int x, int y)
 {
     
 }
