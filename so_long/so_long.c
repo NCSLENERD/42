@@ -30,10 +30,10 @@ void  init_game(t_game *game)
   game->collect_remain = 0;
   game->nbmoves = 0;
   game->img_wall = NULL;
-  game->img_wall = NULL;
-	game->img_wall = NULL;
-	game->img_wall = NULL;
-	game->img_wall = NULL;
+  game->img_collect = NULL;
+	game->img_player = NULL;
+	game->img_floor = NULL;
+	game->img_exit = NULL;
 }
 
 int  main(int argc, char *argv[])
