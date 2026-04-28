@@ -19,16 +19,21 @@ int	close_win(void *param)
 }
 
 void  init_game(t_game *game)
-  {
-      game->mlx = NULL;
-      game->win = NULL;
-      game->map = NULL;
-      game->map_width = 0;
-      game->map_height = 0;
-      game->player_x = 0;
-      game->player_y = 0;
-      game->collect_remain = 0;
-      game->nbmoves = 0;
+{
+  game->mlx = NULL;
+  game->win = NULL;
+  game->map = NULL;
+  game->map_width = 0;
+  game->map_height = 0;
+  game->player_x = 0;
+  game->player_y = 0;
+  game->collect_remain = 0;
+  game->nbmoves = 0;
+  game->img_wall = NULL;
+  game->img_wall = NULL;
+	game->img_wall = NULL;
+	game->img_wall = NULL;
+	game->img_wall = NULL;
 }
 
 int  main(int argc, char *argv[])

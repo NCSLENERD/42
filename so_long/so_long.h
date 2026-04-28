@@ -28,6 +28,11 @@ typedef struct s_game
 	int		player_y;
 	int		collect_remain;
 	int		nbmoves;
+	void	*img_wall;
+	void	*img_floor;
+	void	*img_collect;
+	void	*img_player;
+	void	*img_exit;
 }	t_game;
 
 void	map_height(t_game *game, char *filename);
