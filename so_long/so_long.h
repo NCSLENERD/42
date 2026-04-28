@@ -14,6 +14,7 @@
 
 #define TILE_SIZE 64
 #include "get_nextline/get_next_line.h"
+#include "minilibx-linux/mlx.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>

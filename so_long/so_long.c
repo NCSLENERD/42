@@ -55,13 +55,12 @@ int  main(int argc, char *argv[])
 		printf("%s\n", game.map[i]);
 		i++;
 	}
-    game.mlx = mlx_init();
-    game.win = mlx_new_window(game.mlx, 800, 600, "so_long");
-    mlx_hook(game.win, 17, 0, close_win, game.mlx);
-	/* 4. (Phase 2 : load_textures + render_map ici) */
-
-    /* 5. Lancer la boucle (BLOQUANT) */
-    mlx_loop(game.mlx);
-    free_game(&game);
-    return (0);
-  }
+  game.mlx = mlx_init();
+  game.win = mlx_new_window(game.mlx, game.map_height * TILE_SIZE, game.map_width * TILE_SIZE, "so_long");
+  mlx_hook(game.win, 17, 0, close_win, game.mlx);
+  load_textures(&game);
+  render_map(&game);
+  mlx_loop(game.mlx);
+  free_game(&game);
+  return (0);
+}
