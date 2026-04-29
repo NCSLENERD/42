@@ -48,8 +48,6 @@ void    render_tile(t_game *game, int x, int y)
     mlx_put_image_to_window(game->mlx, game->win, game->img_floor, x * TILE_SIZE, y *TILE_SIZE);
     if(c == '1')
         mlx_put_image_to_window(game->mlx, game->win, game->img_wall, x * TILE_SIZE, y *TILE_SIZE);
-    else if(c == 'P')
-        mlx_put_image_to_window(game->mlx, game->win, game->img_player, x * TILE_SIZE, y *TILE_SIZE);
     else if(c == 'C')
         mlx_put_image_to_window(game->mlx, game->win, game->img_collect, x * TILE_SIZE, y *TILE_SIZE);
     else if(c == 'E')
@@ -62,7 +60,7 @@ void    render_map(t_game *game)
     int y;
 
     x = 0;
-    y = 0;
+    y = 0;R
     while (y < game->map_height)
     {
         while (x < game->map_width)
@@ -73,6 +71,6 @@ void    render_map(t_game *game)
         y++;
         x = 0;
     }
-    mlx_put_image_to_window(game->mlx, game->win, game->img_player, game->player_x, game->player_y);
+    mlx_put_image_to_window(game->mlx, game->win, game->img_player, game->player_x * TILE_SIZE, game->player_y * TILE_SIZE);
     
 }

@@ -60,6 +60,9 @@ int		flood_fill(t_game game);
 void    load_textures(t_game *game);
 void    render_tile(t_game *game, int x, int y);
 void	render_map(t_game *game);
+int		close_win(void *game);
+int		key_press(int keycode, t_game *game);
+void	try_move(t_game *game, int dx, int dy);
 
 #endif
 

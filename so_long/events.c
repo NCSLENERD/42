@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 #include "so_long.h"
 
-
-int close_win(t_game *game)
+int	close_win(void *param)
 {
-
+	free_game((t_game *)param);
+	exit (0);
 }
-
 
 void try_move(t_game *game, int dx, int dy)
 {
@@ -29,16 +28,21 @@ void try_move(t_game *game, int dx, int dy)
     c = game->map[new_y][new_x];
     if (c == '1')
         return;
-    else if (c == 'E' && game->collect_remain != 0)
+    else if (c ==  'C')
     {
-        game->map[game->player_y][game->player_x] = '0';
-        game->map[new_y][new_x] = 'P';
-        game->player_x = new_x;
-        game->player_y = new_y;
+        game->collect_remain = game->collect_remain - 1;
+        game->map[new_y][new_x] = '0';
     }
-        
-
-}   
+    else if (c == 'E' && game->collect_remain == 0)
+    {
+        game->nbmoves = game->nbmoves + 1;
+        ft_printf("VICTOIRE\n");
+        close_win2(game);
+    }
+    game->player_x = new_x;
+    game->player_y = new_y;
+    game->nbmoves = game->nbmoves + 1;
+}   render_map(game);
 
 
 int key_press(int keycode, t_game *game)

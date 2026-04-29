@@ -12,12 +12,6 @@
 #include "so_long.h"
 #include "minilibx-linux/mlx.h"
 
-int	close_win(void *param)
-{
-	mlx_loop_end(param);
-	return (0);
-}
-
 void  init_game(t_game *game)
 {
   game->mlx = NULL;
@@ -58,10 +52,10 @@ int  main(int argc, char *argv[])
 	}
   game.mlx = mlx_init();
   game.win = mlx_new_window(game.mlx, game.map_width * TILE_SIZE, game.map_height * TILE_SIZE, "so_long");
-  mlx_hook(game.win, 17, 0, close_win, game.mlx);
+  mlx_hook(game.win, 17, 0, close_win, &game);
+  mlx_hook(game.win, 2, 1L << 0, key_press, &game);
   load_textures(&game);
   render_map(&game);
   mlx_loop(game.mlx);
-  free_game(&game);
   return (0);
 }
