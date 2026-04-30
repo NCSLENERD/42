@@ -36,13 +36,14 @@ void try_move(t_game *game, int dx, int dy)
     else if (c == 'E' && game->collect_remain == 0)
     {
         game->nbmoves = game->nbmoves + 1;
-        ft_printf("VICTOIRE\n");
-        close_win2(game);
+        write(1, "VICTOIRE\n", 9);
+        close_win(game);
     }
     game->player_x = new_x;
     game->player_y = new_y;
     game->nbmoves = game->nbmoves + 1;
-}   render_map(game);
+    render_map(game);
+}
 
 
 int key_press(int keycode, t_game *game)
