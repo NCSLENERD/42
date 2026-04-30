@@ -60,7 +60,7 @@ void    render_map(t_game *game)
     int y;
 
     x = 0;
-    y = 0;R
+    y = 0;
     while (y < game->map_height)
     {
         while (x < game->map_width)
