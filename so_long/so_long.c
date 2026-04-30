@@ -52,8 +52,8 @@ int  main(int argc, char *argv[])
 	}
   game.mlx = mlx_init();
   game.win = mlx_new_window(game.mlx, game.map_width * TILE_SIZE, game.map_height * TILE_SIZE, "so_long");
-  mlx_hook(game.win, 17, 0, (int (*)())close_win, &game);
-  mlx_hook(game.win, 2, 1L << 0, (int (*)())key_press, &game);
+  mlx_hook(game.win, 17, 0, (int (*)())(void *)close_win, &game);
+  mlx_hook(game.win, 2, 1L << 0, (int (*)())(void *)key_press, &game);
   load_textures(&game);
   render_map(&game);
   mlx_loop(game.mlx);
