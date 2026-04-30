@@ -14,8 +14,8 @@
 void	free_tab(char **map, int map_height)
 {
 	int	i;
-	i = 0;
 
+	i = 0;
 	while (i < map_height)
 	{
 		free(map[i]);
@@ -26,48 +26,47 @@ void	free_tab(char **map, int map_height)
 
 void	free_game(t_game *game)
 {
-	if(game->map)
+	if (game->map)
 	{
 		free_tab(game->map, game->map_height);
 		game->map = NULL;
 	}
-	if(game->img_collect)
+	if (game->img_collect)
 		mlx_destroy_image(game->mlx, game->img_collect);
-	if(game->img_floor)
+	if (game->img_floor)
 		mlx_destroy_image(game->mlx, game->img_floor);
-	if(game->img_wall)
+	if (game->img_wall)
 		mlx_destroy_image(game->mlx, game->img_wall);
-	if(game->img_exit)
+	if (game->img_exit)
 		mlx_destroy_image(game->mlx, game->img_exit);
-	if(game->img_player)
+	if (game->img_player)
 		mlx_destroy_image(game->mlx, game->img_player);
-	if(game->win)
+	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
-	if(game->mlx)
+	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
 }
 
-void	error_exit(t_game *game , char *msg)
+void	error_exit(t_game *game, char *msg)
 {
-	write(2,"Error\n",6);
-	write(2,msg,ft_strlenV2(msg));
-	write(2,"\n",1);
+	write(2, "Error\n", 6);
+	write(2, msg, ft_strlenv2(msg));
+	write(2, "\n", 1);
 	free_game(game);
 	exit(1);
-
 }
 
-int	ft_strlenV2(char *str)
+int	ft_strlenv2(char *str)
 {
 	int	i;
 
 	i = 0;
-	if(!str)
-		return(0);
-	while(str[i])
+	if (!str)
+		return (0);
+	while (str[i])
 		i++;
-	return(i);
+	return (i);
 }

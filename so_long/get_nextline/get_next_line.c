@@ -28,8 +28,6 @@ char	*get_linev(char *buffer)
 		stock[i] = buffer[i];
 		i++;
 	}
-	/*if (buffer[i] == '\n')
-		stock[i++] = '\n';*/
 	stock[i] = '\0';
 	return (stock);
 }
