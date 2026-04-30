@@ -33,7 +33,6 @@ void  init_game(t_game *game)
 int  main(int argc, char *argv[])
 {
 	t_game  game;
-	int	i;
 	
 	init_game(&game);
     if (argc != 2)
@@ -44,12 +43,6 @@ int  main(int argc, char *argv[])
 	if (!verif_map(&game))
 		error_exit(&game, "Invalid map");
   game.map[game.player_y][game.player_x] = '0';
-	i = 0;
-	while (i < game.map_height)
-	{
-		printf("%s\n", game.map[i]);
-		i++;
-	}
   game.mlx = mlx_init();
   game.win = mlx_new_window(game.mlx, game.map_width * TILE_SIZE, game.map_height * TILE_SIZE, "so_long");
   mlx_hook(game.win, 17, 0, (int (*)())(void *)close_win, &game);

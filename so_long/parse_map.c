@@ -57,6 +57,8 @@ void	init_map(t_game *game, char *filename)
 	int			i;
 
 	map_height(game,filename);
+	if(game->map_height == 0)
+		error_exit(game, "Empty map file");
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		error_exit(game, "Cannot open map file");
