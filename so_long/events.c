@@ -24,7 +24,7 @@ void try_move(t_game *game, int dx, int dy)
     char    c;
 
     new_x = game->player_x + dx;
-    new_y = game->player_y + dy;s
+    new_y = game->player_y + dy;
     c = game->map[new_y][new_x];
     if (c == '1')
         return;
