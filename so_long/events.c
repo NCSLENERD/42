@@ -17,6 +17,12 @@ int	close_win(void *param)
 	exit (0);
 }
 
+int	expose_win(void *param)
+{
+	render_map((t_game *)param);
+	return (0);
+}
+
 void	try_move(t_game *game, int dx, int dy)
 {
 	int		new_x;

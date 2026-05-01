@@ -48,6 +48,7 @@ int	main(int argc, char *argv[])
 			game.map_height * TILE_SIZE, "so_long");
 	mlx_hook(game.win, 17, 0, (int (*)())(void *)close_win, &game);
 	mlx_hook(game.win, 2, 1L << 0, (int (*)())(void *)key_press, &game);
+	mlx_hook(game.win, 12, 1L << 15, (int (*)())(void *)expose_win, &game);
 	load_textures(&game);
 	render_map(&game);
 	mlx_loop(game.mlx);
